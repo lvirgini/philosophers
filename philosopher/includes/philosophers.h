@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/07 18:41:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/07 18:59:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ struct s_philo
 	int			state;
 };
 
-struct s_restaurant
+struct s_restaurant // name ?
 {
 	int			nb_philo;
 	t_philo		*philosophers;
-	int			*fork;
+	int			*fork; // ?
 	t_ms		time_to_eat;
 	t_ms		time_to_sleep;
 	t_ms		time_to_die;
@@ -52,30 +52,30 @@ struct s_restaurant
 };
 
 
-int	ft_sleep(t_ms time_to_wait, struct timeval begin);
+void		ft_sleep(t_ms time_to_wait);
 
 /*
 ** utils, libft
 */
 
-void	ft_putstr(char *s);
-char	*ft_itoa(int n);
+void		ft_putstr(char *s);
+char		*ft_itoa(int n);
 
 /*
 ** time conversion
 */
 
 suseconds_t	ms_to_micro(t_ms ms);
-t_ms	get_time_in_ms(struct timeval time);
-suseconds_t	get_time_in_micro(struct timeval time);
-t_ms	second_to_ms(time_t second);
-t_ms	micro_to_ms(suseconds_t micro);
+t_ms		second_to_ms(time_t second);
+t_ms		micro_to_ms(suseconds_t micro);
 
 /*
 ** time utils
 */
 
-t_ms	get_diff_time_ms(struct timeval begin, struct timeval end);
+t_ms		get_time_in_ms(struct timeval time);
+suseconds_t	get_time_in_micro(struct timeval time);
+t_ms		get_diff_time_ms(struct timeval begin, struct timeval end);
 struct timeval	add_timeval(struct timeval t1, struct timeval t2);
 suseconds_t	get_diff_time_micro(struct timeval begin, struct timeval end);
 
