@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/07 18:52:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/08 11:36:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ si pair 4++ == 2 groupe
 
 */		
 
+/*
+int		pair_routine(int	*number)
+{
+
+}*/
+
+
 int	main(int argc, char **argv)
 {
 	// check entrée : si tout conforme
@@ -67,30 +74,10 @@ int	main(int argc, char **argv)
 	int i = 0;
 	while (i++ < 300)
 	{
-
-		ft_sleep(time_to_do,begin);
+		ft_sleep(time_to_do);
 		gettimeofday(&end_step, NULL);
-		ft_putstr(ft_itoa(get_diff_time_ms(begin, end_step)));
+		ft_putstr(ft_itoa(get_diff_time_micro(begin, end_step)));
 		write(1, "\n", 1);
-
-		/*struct timeval		begin_step;
-		end_step.tv_sec = 0;
-		end_step.tv_usec = 0;
-		t_ms	time_actual = 0;
-		t_ms	time_to_end = 0;
-		
-		gettimeofday(&begin_step, NULL);
-		time_to_end = get_time_in_ms(begin) + get_time_in_ms(begin_step) + time_to_do;
-
-		while (time_actual < time_to_end)
-		{
-			usleep(100);
-			gettimeofday(&end_step, NULL);
-			time_actual = get_time_in_ms(begin) + get_time_in_ms(end_step);
-		}
-
-		ft_putstr(ft_itoa(get_diff_time_ms(begin, end_step)));
-		write(1, "\n", 1);*/
 	}
 	return (0);
 }
@@ -141,6 +128,28 @@ int main(void)
 		/*end_step.tv_sec = 0;
 		end_step.tv_usec = 0;
 		time_actual = 0;
+		
+		gettimeofday(&begin_step, NULL);
+		time_to_end = get_time_in_ms(begin) + get_time_in_ms(begin_step) + time_to_do;
+
+		while (time_actual < time_to_end)
+		{
+			usleep(100);
+			gettimeofday(&end_step, NULL);
+			time_actual = get_time_in_ms(begin) + get_time_in_ms(end_step);
+		}
+
+		ft_putstr(ft_itoa(get_diff_time_ms(begin, end_step)));
+		write(1, "\n", 1);*/
+
+
+
+
+				/*struct timeval		begin_step;
+		end_step.tv_sec = 0;
+		end_step.tv_usec = 0;
+		t_ms	time_actual = 0;
+		t_ms	time_to_end = 0;
 		
 		gettimeofday(&begin_step, NULL);
 		time_to_end = get_time_in_ms(begin) + get_time_in_ms(begin_step) + time_to_do;

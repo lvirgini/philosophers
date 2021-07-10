@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:26:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/07 19:00:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/07 19:06:00 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,3 @@ struct timeval	add_timeval(struct timeval t1, struct timeval t2)
 	return (res);
 }
 
-void	ft_sleep(t_ms time_to_wait)
-{
-	struct timeval	actual;
-	suseconds_t		time_to_end;
-
-	gettimeofday(&actual, NULL);
-	time_to_end = get_time_in_ms(actual) + time_to_wait;
-	while (get_time_in_ms(actual) < time_to_end)
-	{
-		usleep(100);
-		gettimeofday(&actual, NULL);
-	}
-}
