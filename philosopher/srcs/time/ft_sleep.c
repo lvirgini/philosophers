@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 19:02:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/08 11:41:34 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/10 16:38:24 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,14 @@
 
 void	ft_sleep(t_ms time_to_wait)
 {
-	struct timeval	actual;
-	t_ms			time_to_end;
-//	struct timeval time_to_end2;
+	struct timeval	time_actual;
+	t_ms			time_to_stop;
 
-	gettimeofday(&actual, NULL);
-	time_to_end = get_time_in_ms(actual) + time_to_wait;
-	while (get_time_in_ms(actual) < time_to_end)
+	gettimeofday(&time_actual, NULL);
+	time_to_stop = get_time_in_ms(time_actual) + time_to_wait;
+	while (get_time_in_ms(time_actual) < time_to_stop)
 	{
-		usleep(10);
-		gettimeofday(&actual, NULL);
+		usleep(100);
+		gettimeofday(&time_actual, NULL);
 	}
-/*
-	while (get_diff_time_micro(time_to_end2, actual) > 0)
-	{
-		usleep(1);
-		gettimeofday(&actual, NULL);
-	}*/
 }

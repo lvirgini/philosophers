@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/08 11:27:15 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/12 12:48:02 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <pthread.h>
 # include <stdio.h> //
 
 enum e_bool
@@ -38,12 +39,14 @@ enum	e_status
 };
 
 typedef struct	s_philo t_philo;
-typedef struct	s_restaurant t_restaurant;
+typedef struct	s_dinner_table t_dinner_table;
 typedef	long	t_ms;
 
 struct s_philo
 {
 	t_ms		last_eat;
+	int			fork_right;
+	int			fork_left;
 	int			status;
 };
 
@@ -56,7 +59,7 @@ struct s_philo
 ** fork 0 | philo 0 | fork 1 | philo 1 | ..
 */
 
-struct s_dinner_table			// name ?
+struct s_dinner_table
 {
 	int			nb_philo;
 	t_philo		**philosophers;
@@ -81,7 +84,7 @@ char		*ft_itoa(int n);
 ** time conversion
 */
 
-suseconds_t	ms_to_micro(t_ms ms);
+suseconds_t	ms_to_micro(t_ms ms); //
 t_ms		second_to_ms(time_t second);
 t_ms		micro_to_ms(suseconds_t micro);
 
@@ -90,10 +93,10 @@ t_ms		micro_to_ms(suseconds_t micro);
 */
 
 t_ms		get_time_in_ms(struct timeval time);
-suseconds_t	get_time_in_micro(struct timeval time);
+suseconds_t	get_time_in_micro(struct timeval time); //
 
 t_ms		get_diff_time_ms(struct timeval begin, struct timeval end);
-suseconds_t	get_diff_time_micro(struct timeval begin, struct timeval end);
+suseconds_t	get_diff_time_micro(struct timeval begin, struct timeval end);//
 
-struct timeval	add_timeval(struct timeval t1, struct timeval t2);
+struct timeval	add_timeval(struct timeval t1, struct timeval t2);//
 #endif
