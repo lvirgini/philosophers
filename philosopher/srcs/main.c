@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/13 22:21:24 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/14 16:13:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,55 @@
 // systeme d'erreur
 */
 
-void	add_one(int *number, char *to_print)
+typedef struct number
 {
-	*number = *number + 1;
-	printf("number : %s\n", to_print);
+	int					number;
+	pthread_mutex_t		mutex_nb;
+}number;
+
+
+void	add_one(number *nb, char *to_print)
+{
+	nb->number = nb->number + 1;
+	printf("number : %d\t%s\n", nb->number, to_print);
 }
 
-void	*pair_routine(void	*number)
+void	*pair_routine(void *n)
 {
-	while ((int *)number % 2 != 0)
+	number *nb = (number *)n;
+	while(1)
+	{
+		pthread_mutex_lock(&nb->mutex_nb);
+		if (nb->number % 2 == 0)
+			add_one(nb, "PAIR");
+		pthread_mutex_unlock(&nb->mutex_nb);
 		ft_sleep(1);
-	add_one(number, "PAIR");
-	return (NULL);
+	}
 }
 
-void	*impair_routine(void *number)
+void	*impair_routine(void *n)
 {
-	while (*number % 2 == 0)
+	number *nb = (number *)n;
+	while(1)
+	{
+		pthread_mutex_lock(&nb->mutex_nb);
+		if (nb->number % 2 != 0)
+			add_one(nb, "IMPAIRE");
+		pthread_mutex_unlock(&nb->mutex_nb);
 		ft_sleep(1);
-	add_one(number, "IMPAIRE");
-	return (NULL);
+	}
 }
 
-void	*checker_routine(void *number)
+void	*checker_routine(void *n)
 {
-	while (*number < 100)
-		ft_sleep(1);
-	return (NULL);
+	number *nb = (number *)n;
+	while (1)
+	{
+		pthread_mutex_lock(&nb->mutex_nb);
+		if (nb->number >= 100)
+			return (NULL);
+		pthread_mutex_unlock(&nb->mutex_nb);
+	}
 }
 
 /*
@@ -62,11 +84,18 @@ int	main(int argc, char **argv)
 	pthread_t		checker;
 	pthread_t		pair;
 	pthread_t		impair;
-	int				number = 0;
 
-	pthread_create(&checker, NULL, checker_routine, &number);
-	pthread_create(&pair, NULL, pair_routine, &number);
-	pthread_create(&impair, NULL, impair_routine, &number);
+
+	number	nb;
+	nb.number = 0;
+
+	if (pthread_create(&pair, NULL, pair_routine, &nb) != 0)
+		return (EXIT_FAILURE);
+	if (pthread_create(&checker, NULL, checker_routine, &nb) != 0)
+		return (EXIT_FAILURE);
+	if (pthread_create(&impair, NULL, impair_routine, &nb) != 0)
+		return (EXIT_FAILURE);
+	pthread_join(checker, NULL);
 	return (0);
 /*
 	struct timeval		begin;

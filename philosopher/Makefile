@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/07/07 15:56:18 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/07/14 15:33:42 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ vpath %.h $(foreach dir, $(INC_DIR)/, $(dir):)
 SRC		= 	$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.c), $(notdir $(file))))
 OBJ 	=	$(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 
+LIB		= pthread
+
 # ----------------- #
 #	 COMPILATION	#
 # ----------------- #
@@ -34,6 +36,7 @@ OBJ 	=	$(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 CC = 		gcc
 CFLAG =		-Wall -Werror -Wextra
 IFLAG = 	$(foreach dir, $(INC_DIR), -I $(dir))
+LFLAG   =       $(foreach lib, $(LIB), -l $(lib) )
  
 
 # ----------------- #
@@ -46,7 +49,7 @@ $(OBJ_DIR)%.o: %.c $(HEADERS)
 			@$(CC) $(CFLAG) $(IFLAG) -o $@ -c $<
 			
 $(NAME):	$(OBJ) $(INC_DIR)
-			@$(CC) $(CFLAG) $(IFLAG) $(OBJ) -o $@
+			$(CC) $(CFLAG) $(IFLAG) $(OBJ) -o $@ $(LFLAG)
 			@echo "\n\t\033[36;1m*.............................*"
 			@echo "\n\t*     Compilation $(NAME)     *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
 			@echo "\n\t\033[036;1m*.............................*\033[0m"
