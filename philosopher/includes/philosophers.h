@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/12 12:48:02 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/15 00:00:07 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <stdio.h> //
+
+/*
+** DINNER_ROOM
+**
+** philosopher 0 = 1st
+** forks 0 = between last and 1st.
+**
+** fork 0 | philo 0 | fork 1 | philo 1 | ..
+*/
 
 enum e_bool
 {
@@ -38,36 +47,38 @@ enum	e_status
 	IS_SLEEPING,
 };
 
-typedef struct	s_philo t_philo;
-typedef struct	s_dinner_table t_dinner_table;
+enum	e_fork
+{
+	IS_FREE,
+	IS_TAKEN,
+};
+
+typedef struct s_philo t_philo;
+typedef struct s_dinner_table t_dinner_table;
 typedef	long	t_ms;
 
 struct s_philo
 {
-	t_ms		last_eat;
-	int			fork_right;
-	int			fork_left;
-	int			status;
+	struct timeval	last_eat;
+	int				nb_eat;
+	int				*fork_right; // adresse identique a philo + 1 fork left
+	int				*fork_left;	 // adresse identique a philo - 1 fork right
+	int				status;
+	pthread_t		thrd_id;
+	pthread_mutex_t	m_fork;
+	pthread_mutex_t m_print;
 };
 
-/*
-** DINNER_ROOM
-**
-** philosopher 0 = 1st
-** forks 0 = between last and 1st.
-**
-** fork 0 | philo 0 | fork 1 | philo 1 | ..
-*/
 
 struct s_dinner_table
 {
 	int			nb_philo;
 	t_philo		**philosophers;
-	int			**forks; 		// ?
 	t_ms		time_to_eat;
 	t_ms		time_to_sleep;
 	t_ms		time_to_die;
 	int			if_dead;
+	int			if_all_eat;
 };
 
 
@@ -99,4 +110,5 @@ t_ms		get_diff_time_ms(struct timeval begin, struct timeval end);
 suseconds_t	get_diff_time_micro(struct timeval begin, struct timeval end);//
 
 struct timeval	add_timeval(struct timeval t1, struct timeval t2);//
+
 #endif

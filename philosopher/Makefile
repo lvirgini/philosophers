@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/07/14 15:33:42 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/07/14 19:49:01 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIB		= pthread
 # ----------------- #
 
 CC = 		gcc
-CFLAG =		-Wall -Werror -Wextra
+CFLAG =		-Wall -Werror -Wextra -fsanitize=thread 
 IFLAG = 	$(foreach dir, $(INC_DIR), -I $(dir))
 LFLAG   =       $(foreach lib, $(LIB), -l $(lib) )
  
