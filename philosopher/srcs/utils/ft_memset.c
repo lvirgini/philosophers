@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 11:58:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 16:21:43 by lvirgini         ###   ########.fr       */
+/*   Created: 2019/10/18 13:39:14 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/19 16:17:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include <stddef.h>
 
 /*
-** if one philosophers, can't eat because of one fork
-** if argv < 4 > 6
+** Remplit les n premiers octets de la zone mémoire pointée par s.
+** avec l'octet c.
 */
 
-int     philo_error(int error, t_dinner_table *table)
+void	*ft_memset(void *s, int c, size_t n)
 {
-    if (table)
-        free_all_table(table);
-    
+	char	*d;
+
+	d = s;
+	while (n--)
+		*d++ = (char)c;
+	return (s);
 }

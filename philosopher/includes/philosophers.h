@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/15 00:00:07 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/19 16:28:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void		ft_sleep(t_ms time_to_wait);
 
 void		ft_putstr(char *s);
 char		*ft_itoa(int n);
+void		*ft_memset(void *s, int c, size_t n);
 
 /*
 ** time conversion

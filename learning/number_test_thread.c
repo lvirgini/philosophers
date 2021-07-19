@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/14 21:45:11 by lvirgini         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "philosophers.h"
 
@@ -82,7 +71,6 @@ void	*checker_routine(void *n)
 ** check entrée : si tout conforme
 ** initialise les philosophe
 ** creation de la simulation
-** check si il y a un mort
 ** fin de la simulation
 */
 
@@ -91,24 +79,12 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	t_dinner_table	*table;
-
-if (check_arg(argc) == -1)
-	return (-1);
-table = get_arg(argc, argv);
-if (table == NULL)
-	return(-1);
-return (0);
+	//pthread_t		checker;
+	pthread_t		pair;
+	pthread_t		impair;
 
 
-
-
-
-
-
-
-
-	/*number	nb;
+	number	nb;
 	
 	nb.number = 0;
 	nb.end = 0;
@@ -135,7 +111,7 @@ return (0);
 			return (0);
 		}
 		pthread_mutex_unlock(&nb.mutex_nb);
-	}*/
+	}
 	return (0);
 /*
 	struct timeval		begin;
