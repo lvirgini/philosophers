@@ -93,8 +93,6 @@ int	main(int argc, char **argv)
 
 	t_dinner_table	*table;
 
-if (check_arg(argc) == -1)
-	return (-1);
 table = get_arg(argc, argv);
 if (table == NULL)
 	return(-1);

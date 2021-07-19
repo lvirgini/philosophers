@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 16:28:05 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/19 17:16:43 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ enum	e_fork
 
 typedef struct s_philo t_philo;
 typedef struct s_dinner_table t_dinner_table;
+typedef struct s_rules t_rules;
+
 typedef	long	t_ms;
 
 struct s_philo
@@ -66,17 +68,21 @@ struct s_philo
 	int				status;
 	pthread_t		thrd_id;
 	pthread_mutex_t	m_fork;
-	pthread_mutex_t m_print;
+	//pthread_mutex_t m_print;
 };
 
+struct s_rules
+{
+	t_ms		time_to_eat;
+	t_ms		time_to_sleep;
+	t_ms		time_to_die;
+	int			nb_meal;
+};
 
 struct s_dinner_table
 {
 	int			nb_philo;
-	t_philo		**philosophers;
-	t_ms		time_to_eat;
-	t_ms		time_to_sleep;
-	t_ms		time_to_die;
+	t_philo		*philosophers;
 	int			if_dead;
 	int			if_all_eat;
 };
