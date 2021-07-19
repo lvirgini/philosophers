@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_args.c                                       :+:      :+:    :+:   */
+/*   philo_fork.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/19 14:43:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 00:12:35 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/07/19 23:23:00 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/19 23:28:25 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopphers.h"
+#ifndef PHILO_FORK_H
+# define PHILO_FORK_H
 
-t_dinner_table  *get_table(int argc, char **argv)
+# include "philosophers.h"
+
+/*
+**   forks[i].status = x;
+**	(fork + i)->status = x;
+*/
+
+enum	e_fork
 {
-////
+	IS_FREE,
+	IS_TAKEN,
+};
 
-}
+typedef struct	s_fork
+{
+	int				status;
+	pthread_mutex_t m_fork;
+}	t_fork;
+
+t_fork	*init_forks(int nb_philo);
+void	free_forks(t_fork *forks, int nb_philo);
+
+#endif

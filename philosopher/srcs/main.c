@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/14 21:45:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 00:13:30 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,15 @@ void	*checker_routine(void *n)
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-
 	t_dinner_table	*table;
+	t_rules			*rules;
 
-table = get_arg(argc, argv);
-if (table == NULL)
-	return(-1);
-return (0);
+    if (argc < 4 || argc > 6)
+        return (philo_error(ERR_ARG, NULL));
+	table = parse_args(argc, argv);
+	if (table == NULL)
+		return(-1);
+	return (0);
 
 
 

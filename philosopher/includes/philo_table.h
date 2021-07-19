@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_philo.c                                       :+:      :+:    :+:   */
+/*   philo_table.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/19 15:48:36 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 16:25:43 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/07/19 21:41:45 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/20 00:07:46 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#ifndef PHILO_TABLE_H
+# define PHILO_TABLE_H
 
-void    free_philo(t_philo *philo)
+# include "philosophers.h"
+
+typedef struct	s_dinner_table
 {
-    if (philo)
-    {
-        free(philo);
-    }
-}
+	int			nb_philo;
+	t_philo		*philos;
+	t_fork		*forks;
+	int			all_alive;
+	int			if_all_eat;
+}	t_dinner_table;
+
+t_dinner_table	*init_dinner_table(int	nb_philo);
+void    		free_table(t_dinner_table *table);
+
+#endif

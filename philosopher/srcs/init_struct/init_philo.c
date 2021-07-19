@@ -6,19 +6,37 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:48:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 16:27:54 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 00:05:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_philo *init_philo(int	*fork_left)
+t_philo *init_philo(t_fork	*left, t_fork *right, int id, t_rules *rules);
 {
 	t_philo *philo;
+	int		fork_right;
 
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo == NULL)
 		return (NULL);
-	ft_memset(philo, 0, sizeof(t_philo));
-	philo->fork_left = &fork_left;
+	philo->id = id;
+	philo->fork_left = left;
+	philo->fork_right = right;
+	philo->status = IS_THINKING;
+	philo->rules = rules;
+	philo->last_eat = 0;
+	philo->nb_eat = 0;
+	philo->thrd_id = 0;
+}
+
+void	free_philos(t_philo *philo, int nb_philo)
+{
+	if (philo)
+	{
+		free(philo->rules);
+		while (nb_philo--)
+			free(philo[nb_philo]);
+		free(philo);
+	}
 }
