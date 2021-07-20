@@ -1,15 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_arg.c                                        :+:      :+:    :+:   */
+/*   ft_isspace_isdigit.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lvirgini <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/19 14:40:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 14:41:36 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/07/20 16:15:21 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/20 16:16:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+int	ft_isdigit(int c)
+{
+	return (c >= 48 && c <= 57);
+}
 
-
+int	ft_isspace(int c)
+{
+	return (c == ' ' || (c >= '\t' && c <= '\r'));
+}

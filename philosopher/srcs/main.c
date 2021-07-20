@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 00:13:30 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:04:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,13 @@ void	*checker_routine(void *n)
 
 int	main(int argc, char **argv)
 {
-	t_dinner_table	*table;
-	t_rules			*rules;
+	t_dinner_table	table;
+	t_rules			rules;
 
-    if (argc < 4 || argc > 6)
-        return (philo_error(ERR_ARG, NULL));
-	table = parse_args(argc, argv);
-	if (table == NULL)
-		return(-1);
-	return (0);
-
-
-
-
-
+	if (parse_args(argc, argv, &table, &rules))
+		return(EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
 
 
@@ -134,7 +127,7 @@ int	main(int argc, char **argv)
 		}
 		pthread_mutex_unlock(&nb.mutex_nb);
 	}*/
-	return (0);
+
 /*
 	struct timeval		begin;
 	struct timeval		end_step;
@@ -152,7 +145,7 @@ int	main(int argc, char **argv)
 		write(1, "\n", 1);
 	}
 	return (0);*/
-}
+
 
 
 /*

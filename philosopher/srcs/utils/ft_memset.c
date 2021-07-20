@@ -6,11 +6,11 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 13:39:14 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 16:17:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 15:04:52 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "philosophers.h"
 
 /*
 ** Remplit les n premiers octets de la zone mémoire pointée par s.

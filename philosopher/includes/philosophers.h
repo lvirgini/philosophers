@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 23:49:55 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:05:30 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ enum	e_error
 
 };
 
+int		parse_args(int argc, char **argv, t_dinner_table *table, t_rules *rules);
 int     philo_error(int nb_error, t_dinner_table *table);
 
 #endif

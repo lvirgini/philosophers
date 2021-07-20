@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:58:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/19 23:48:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:13:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 ** if one philosophers, can't eat because of one fork
 ** if argv < 4 > 6
 */
+
+static void	free_table(t_dinner_table *table)
+{
+	if (table)
+	{
+		if (table->philo)
+			free_philos(table->philos);
+		if (table->forks)
+			free_forks(table->forks);
+	}
+}
+
 static void	print_formating_args(void)
 {
 //////
