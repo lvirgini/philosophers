@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:58:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 16:13:53 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 17:39:41 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,33 @@ static void	free_table(t_dinner_table *table)
 {
 	if (table)
 	{
-		if (table->philo)
-			free_philos(table->philos);
+		if (table->philos)
+			free_philos(table->philos, table->nb_philo);
 		if (table->forks)
-			free_forks(table->forks);
+			free_forks(table->forks, table->nb_philo);
 	}
 }
 
 static void	print_formating_args(void)
 {
-//////
+	char	*show_good_arg = "\033[31;1m\nProject Philosophers :\nnumber of philosophers \
+must be > 0\n./philo | number_of_philosophers | time_to_die | time_to_eat \
+| time_to_sleep | [number of times each philosopher must eat] \n\n\033[0m";
+	
+	ft_putstr(show_good_arg);
 }
 
 int     philo_error(int nb_error, t_dinner_table *table)
 {
-    static char error[10] = {
-		"Error : Malloc return NULL : allocation problem\n",
-		"Error : Arguments are not well formated :\n"
-	}
+    static char *error[10] = {
+		"\033[31;1mError : Malloc return NULL : allocation problem\n\033[0m",
+		"\033[31;1mError : Arguments are not well formated :\n\033[0m",
+	};
 	
-	ft_putstr(error[nb_error])
-	if (nb_error == ERR_ARG);
+	ft_putstr(error[nb_error]);
+	if (nb_error == ERR_ARG)
 		print_formating_args();
 	if (table)
-        free_all_table(table);
-	return (-1);
+        free_table(table);
+	return (FAILLURE);
 }

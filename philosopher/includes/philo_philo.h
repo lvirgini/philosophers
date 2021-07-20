@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 21:45:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 00:12:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/20 17:17:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct s_philo
 	pthread_t		thrd_id;
 };
 
-t_philo 	*init_philo(int	*fork_left);
+t_philo		*init_philo(t_fork	*left, t_fork *right, int id, t_rules *rules);
 void		free_philos(t_philo *philo, int nb_philo);
 
 #endif
