@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:28:19 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 17:42:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/21 13:07:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define STRUCT_AND_UTILS_H
 
 typedef long	t_ms;
-
 
 enum e_bool
 {
@@ -24,8 +23,8 @@ enum e_bool
 
 enum	e_success_faillure
 {
+	FAILLURE = -1,
 	SUCCESS,
-	FAILLURE,
 };
 
 enum	e_status
@@ -58,7 +57,6 @@ typedef struct s_rules
 
 void		ft_putstr(char *s);
 char		*ft_itoa(int n);
-int			ft_atoi(const char *s);
 void		*ft_memset(void *s, int c, size_t n);
 int			ft_isdigit(int c);
 int			ft_isspace(int c);

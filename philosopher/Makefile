@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/07/14 19:49:01 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/07/21 15:06:13 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,13 @@ LIB		= pthread
 #	 COMPILATION	#
 # ----------------- #
 
-CC = 		gcc
-CFLAG =		-Wall -Werror -Wextra -fsanitize=thread 
-IFLAG = 	$(foreach dir, $(INC_DIR), -I $(dir))
-LFLAG   =       $(foreach lib, $(LIB), -l $(lib) )
+CC = 			gcc
+CFLAG =			-Wall -Werror -Wextra
+CFLAG_LEAK = 	$(CFLAG) -fsanitize=leak
+CFLAG_ADDRESS = $(CFLAG) -fsanitize=address
+CFLAG_THREAD = 	$(CFLAG) -fsanitize=thread 
+IFLAG = 		$(foreach dir, $(INC_DIR), -I $(dir))
+LFLAG =			$(foreach lib, $(LIB), -l $(lib) )
  
 
 # ----------------- #
@@ -58,6 +61,15 @@ all:		${NAME}
 
 debug :		$(OBJ) $(INC_DIR)
 			@$(CC) $(CFLAG) $(IFLAG) $(OBJ)
+
+leak : 		$(OBJ) $(INC_DIR)
+			$(CC) $(CFLAG_LEAK) $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
+
+thread :	$(OBJ) $(INC_DIR)
+			$(CC) $(CFLAG_THREAD) $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
+
+adress :	$(OBJ) $(INC_DIR)
+			$(CC) $(CFLAG_ADDRESS) $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
 
 show	:
 			@echo "SRC_DIR : $(SRC_DIR)\n"

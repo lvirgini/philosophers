@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:43:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 17:41:43 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/21 14:30:03 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_rules(t_rules *rules)
 {
 	if (rules->time_to_eat < 0 || rules->time_to_sleep < 0
-			|| rules->time_to_die < 0)
+		|| rules->time_to_die < 0)
 		return (FAILLURE);
 	return (SUCCESS);
 }
@@ -43,15 +43,13 @@ static t_ms	mini_atoi(char *s)
 
 static int	get_table(char **argv, t_dinner_table *table)
 {
-	int    nb_philo;
+	int		nb_philo;
 
 	nb_philo = (int)mini_atoi(argv[1]);
 	if (nb_philo < 1)
 		return (FAILLURE);
-	table->philos = (t_philo *)malloc(sizeof(t_philo) * nb_philo);
-	table->forks = (t_fork *)malloc(sizeof(t_fork) * nb_philo);
-	if (!table->forks || !table->philos)
-		return (philo_error(ERR_MALLOC, table));
+	table->forks = NULL;
+	table->philos = NULL;
 	table->all_alive = true;
 	table->if_all_eat = false;
 	table->nb_philo = nb_philo;
@@ -78,8 +76,15 @@ static int	get_rules(int argc, char **argv, t_rules *rules)
 
 int	parse_args(int argc, char **argv, t_dinner_table *table, t_rules *rules)
 {
-	if (argc < 4 || argc > 6 || get_rules(argc, argv, rules) == FAILLURE
-			|| get_table(argv, table) == FAILLURE)
+	if (argc < 4 || argc > 6
+		|| get_rules(argc, argv, rules) == FAILLURE
+		|| get_table(argv, table) == FAILLURE)
 		return (philo_error(ERR_ARG, NULL));
+	table->forks = malloc_forks(table->nb_philo);
+	if (!table->forks)
+		return (philo_error(ERR_ARG, table));
+	table->philos = malloc_philos(table->nb_philo, rules, table->forks);
+	if (!table->philos)
+		return (philo_error(ERR_ARG, table));
 	return (SUCCESS);
 }

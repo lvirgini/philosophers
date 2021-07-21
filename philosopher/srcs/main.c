@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/20 17:42:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/21 15:09:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ int	main(int argc, char **argv)
 	if (parse_args(argc, argv, &table, &rules))
 		return(EXIT_FAILURE);
 
+	
 		//check nb_meat 0 return direct
+	free_all_table(&table);
 	return (EXIT_SUCCESS);
 }
 

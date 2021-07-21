@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 20:26:18 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/10 16:40:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/21 12:58:46 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ suseconds_t	get_time_in_micro(struct timeval time) //
 
 struct timeval	add_timeval(struct timeval t1, struct timeval t2) //
 {
-	struct timeval res;
+	struct timeval	res;
 
 	res.tv_sec = t1.tv_sec + t2.tv_sec;
 	res.tv_usec = t1.tv_usec + t2.tv_usec;
 	return (res);
 }
-
