@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:28:19 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/21 13:07:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/22 19:23:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ enum	e_success_faillure
 
 enum	e_status
 {
-	IS_THINKING,
+	TAKEN_FORK,
 	IS_EATING,
 	IS_SLEEPING,
+	IS_THINKING,
 	IS_DEAD,
-	TAKEN_FORK,
 };
 /*
 ** Structure rules
@@ -41,10 +41,11 @@ enum	e_status
 
 typedef struct s_rules
 {
-	t_ms		time_to_eat;
-	t_ms		time_to_sleep;
-	t_ms		time_to_die;
-	int			nb_meal;
+	t_ms			time_to_eat;
+	t_ms			time_to_sleep;
+	t_ms			time_to_die;
+	int				nb_meal;
+	struct timeval	begin;
 }t_rules;
 
 //t_rules		*init_rules(t_ms tteat, t_ms ttsleep, t_ms ttdie, int nbmeal);
@@ -55,6 +56,7 @@ typedef struct s_rules
 ** utils, libft
 */
 
+t_ms		mini_atoi(char *s);
 void		ft_putstr(char *s);
 char		*ft_itoa(int n);
 void		*ft_memset(void *s, int c, size_t n);

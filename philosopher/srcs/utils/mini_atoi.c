@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_table.h                                      :+:      :+:    :+:   */
+/*   mini_atoi.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/19 21:41:45 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:18:59 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/07/22 19:20:20 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/22 19:20:35 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TABLE_H
-# define PHILO_TABLE_H
+#include "philosophers.h"
 
-# include "philosophers.h"
-
-typedef struct s_dinner_table
+t_ms	mini_atoi(char *s)
 {
-	int			nb_philo;
-	t_philo		*philos;
-	t_fork		*forks;
-	int			all_alive;
-	int			if_all_eat;
-}	t_dinner_table;
+	int		i;
+	t_ms	result;
 
-int		get_table(char **argv, t_dinner_table *table);
-void	free_all_table(t_dinner_table *table);
-
-#endif
+	if (!s)
+		return (-1);
+	i = 0;
+	result = 0;
+	while (s[i] && ft_isspace(s[i]))
+		i++;
+	while (s[i] && ft_isdigit(s[i]))
+	{
+		result = result * 10 + (s[i] - '0');
+		i++;
+	}
+	if (s[i])
+		return (-1);
+	return (result);
+}

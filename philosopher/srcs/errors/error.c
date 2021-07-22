@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:58:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/21 15:09:13 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/22 15:00:24 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	philo_error(int nb_error, t_dinner_table *table)
 	static char	*error[10] = {
 		"\033[31;1mError : Malloc return NULL : allocation problem\n\033[0m",
 		"\033[31;1mError : Arguments are not well formated :\n\033[0m",
+		"\033[31;1mError : pthread_create return 0, fail to create pthread\n\033[0m",
 	};
 
 	ft_putstr(error[nb_error]);

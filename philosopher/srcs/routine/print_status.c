@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_table.h                                      :+:      :+:    :+:   */
+/*   print_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/19 21:41:45 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:18:59 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/07/22 19:10:15 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/22 19:48:26 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TABLE_H
-# define PHILO_TABLE_H
+#include "philosophers.h"
 
-# include "philosophers.h"
-
-typedef struct s_dinner_table
+void	print_status(int philo_id, int status, struct timeval begin)
 {
-	int			nb_philo;
-	t_philo		*philos;
-	t_fork		*forks;
-	int			all_alive;
-	int			if_all_eat;
-}	t_dinner_table;
+	struct timeval	time;
+	static char		*str_status[5] = {
+		"has taken a fork",
+		"is eating",
+		"is sleeping",
+		"is thinking",
+		"died",
+	};
 
-int		get_table(char **argv, t_dinner_table *table);
-void	free_all_table(t_dinner_table *table);
-
-#endif
+	gettimeofday(&time, NULL);
+	printf("%ld ms\t%d %s\n",get_diff_time_ms(begin, time), philo_id, str_status[status]);
+}

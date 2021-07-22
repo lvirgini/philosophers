@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_table.h                                      :+:      :+:    :+:   */
+/*   init_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/19 21:41:45 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:18:59 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/07/22 19:18:32 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/07/22 19:18:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TABLE_H
-# define PHILO_TABLE_H
+#include "philosophers.h"
 
-# include "philosophers.h"
-
-typedef struct s_dinner_table
+int	get_table(char **argv, t_dinner_table *table)
 {
-	int			nb_philo;
-	t_philo		*philos;
-	t_fork		*forks;
-	int			all_alive;
-	int			if_all_eat;
-}	t_dinner_table;
+	int		nb_philo;
 
-int		get_table(char **argv, t_dinner_table *table);
-void	free_all_table(t_dinner_table *table);
-
-#endif
+	nb_philo = (int)mini_atoi(argv[1]);
+	if (nb_philo < 1)
+		return (FAILLURE);
+	table->forks = NULL;
+	table->philos = NULL;
+	table->all_alive = true;
+	table->if_all_eat = false;
+	table->nb_philo = nb_philo;
+	return (SUCCESS);
+}
