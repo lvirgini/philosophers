@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 21:37:14 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/22 21:43:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 			{
 				print_status(philo[nb_philo_dead].id, IS_DEAD, rules->begin);
 				stop_simulation(philo, nb_philo);
+				ft_sleep(100);
 				return ;
 			}	
 			i++;

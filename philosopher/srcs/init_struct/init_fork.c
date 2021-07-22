@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:24:45 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:19:35 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/22 21:43:47 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_forks(t_fork *forks, int nb_philo)
 	if (forks)
 	{
 		while (nb_philo--)
-			pthread_mutex_destroy(&(forks + nb_philo)->m_fork);
+			;//pthread_mutex_destroy(&(forks + nb_philo)->m_fork);
 		free(forks);		
 	}
 }
