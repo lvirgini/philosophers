@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 21:03:34 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/22 21:32:51 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	*routine(void *philosopher)
 	
 	while(philo->status != IS_DEAD)
 	{
-		printf("%d\n", philo->status);
+		//printf("%d\n", philo->status);
 		if (philo->status == IS_THINKING)
 		{
 			if (take_fork(philo->fork_right) == SUCCESS)
@@ -60,10 +60,10 @@ void	*routine(void *philosopher)
 					print_status(philo->id, TAKEN_FORK, begin);
 					print_status(philo->id, TAKEN_FORK, begin);
 					print_status(philo->id, IS_EATING, begin);
+					gettimeofday(&(philo)->last_eat, NULL);
 					philo->status = IS_EATING;
 					philo->nb_eat += 1;
-					gettimeofday(&(philo)->last_eat, NULL);
-					printf("%ld EATING PHILO\n", get_time_in_ms(philo->last_eat));
+				//	printf("%ld EATING PHILO\n", get_time_in_ms(philo->last_eat));
 					ft_sleep(philo->rules->time_to_eat);
 					drop_fork(philo->fork_right);
 					drop_fork(philo->fork_left);
@@ -72,6 +72,7 @@ void	*routine(void *philosopher)
 					drop_fork(philo->fork_right);
 
 			}
+			//printf("%d\n", philo->status);
 		}
 		else if (philo->status == IS_EATING)
 		{
@@ -84,6 +85,7 @@ void	*routine(void *philosopher)
 			philo->status = IS_THINKING;
 			print_status(philo->id, IS_THINKING, begin);
 		}
+		//printf("%d\n", philo->status);
 	}
 	return (NULL);
 }
