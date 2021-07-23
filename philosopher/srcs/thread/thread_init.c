@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:16:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 18:55:53 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/23 11:48:33 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	*test(void *philosopher)
 	return (NULL);
 }*/
 
-
 int		create_philo_thread(t_philo	*philo, int nb_philo)
 {
 	int	i;
@@ -34,7 +33,8 @@ int		create_philo_thread(t_philo	*philo, int nb_philo)
 	while (i < nb_philo)
 	{
 		printf("philo ID = %d\n", (philo + i)->id);
-		if (pthread_create(&(philo + i)->thrd_id, NULL, &routine, philo + i) != 0)
+		if (pthread_create(&(philo + i)->thrd_id, NULL, &routine,
+				philo + i) != 0)
 			return (FAILLURE);
 		pthread_detach((philo + i)->thrd_id);
 		i++;

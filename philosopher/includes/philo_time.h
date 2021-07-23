@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 21:43:02 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/21 12:42:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/23 12:05:02 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "philosophers.h"
 
-void			ft_sleep(t_ms time_to_wait);
+void			ms_sleep(t_ms time_to_wait);
 
 /*
 ** time conversion

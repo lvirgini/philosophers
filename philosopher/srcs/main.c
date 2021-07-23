@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 20:56:18 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/23 11:43:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	t_rules			rules;
 
 	if (parse_args(argc, argv, &table, &rules))
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (rules.nb_meal == 0)
 	{
 		free_all_table(&table);
@@ -38,9 +38,6 @@ int	main(int argc, char **argv)
 	free_all_table(&table);
 	return (EXIT_SUCCESS);
 }
-
-
-
 
 	/*number	nb;
 	
