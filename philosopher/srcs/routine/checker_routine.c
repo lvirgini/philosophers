@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 12:07:12 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/23 17:18:03 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 	gettimeofday(&now, NULL);
 	while (nb_philo--)
 	{
-	//	printf("%ld, %ld\n", get_time_in_ms(philo[nb_philo].last_eat), time_to_die);
 		last_eat = get_time_in_ms(philo[nb_philo].last_eat);
 		if (last_eat > 0
 			&& get_time_in_ms(now) - last_eat >= time_to_die)
+		{
+			printf("%ld, %ld\n", get_time_in_ms(now) - last_eat, time_to_die);
 			return (nb_philo);
+		}
 	//printf("%ld\n",  get_time_in_ms(now) - last_eat);
 	}
 	return (-1);

@@ -6,12 +6,12 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:26:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/06 20:31:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/23 17:07:43 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
+/*
 static int	ft_abs(int n)
 {
 	if (n < 0)
@@ -64,4 +64,4 @@ char	*ft_itoa(int n)
 		return (NULL);
 	get_str_from_int(dst, n, size);
 	return (dst);
-}
+}*/
