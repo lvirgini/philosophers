@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:48:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 17:14:35 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/24 12:18:50 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_philo	*malloc_philos(int nb_philo, t_rules *rules, t_fork *forks)
 		{
 			philos[i] = init_philo((i + 1), rules, (forks + i - 1),
 					(forks + i));
-			philos[i].last_eat = rules->begin;
 			printf("INIT PHILO = ID = %d\n\tleft = %p\n\tright = %p\n", (philos + i)->id, (philos + i)->fork_left, (philos + i)->fork_right);
 			i++;
 		}

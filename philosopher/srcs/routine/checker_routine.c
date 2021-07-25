@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 17:18:03 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 10:22:11 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	make_it_start(t_philo	*philo, t_fork *forks, int nb_philo)
 {
 	int	i;
 
+	print_status(NULL, 0);
 	i = 0;
 	while (i < nb_philo)
 	{
@@ -53,9 +54,9 @@ static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 	{
 		last_eat = get_time_in_ms(philo[nb_philo].last_eat);
 		if (last_eat > 0
-			&& get_time_in_ms(now) - last_eat >= time_to_die)
+			&& get_diff_time_ms(philo[nb_philo].last_eat, now) > time_to_die)
 		{
-			printf("%ld, %ld\n", get_time_in_ms(now) - last_eat, time_to_die);
+			//printf("%ld, %ld\n", get_diff_time_ms(philo[nb_philo].last_eat, now), time_to_die);
 			return (nb_philo);
 		}
 	//printf("%ld\n",  get_time_in_ms(now) - last_eat);
@@ -81,9 +82,9 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 			nb_philo_dead = is_dead_philo(philo, nb_philo, rules->time_to_die);
 			if (nb_philo_dead != -1)
 			{
-				print_status(philo[nb_philo_dead].id, IS_DEAD, rules->begin);
+				print_status(philo + nb_philo_dead, IS_DEAD);
 				stop_simulation(philo, nb_philo);
-				ms_sleep(100);
+				ms_sleep(1);
 				return ;
 			}	
 			i++;

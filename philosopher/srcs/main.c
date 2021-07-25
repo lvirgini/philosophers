@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 11:43:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/24 13:40:28 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char **argv)
 	if (create_philo_thread(table.philos, table.nb_philo) == FAILLURE)
 		return (philo_error(ERR_THREAD_INIT, &table));
 	start_simulation(&table, &rules);
+	join_philo_thread(table.philos, table.nb_philo);
 	free_all_table(&table);
 	return (EXIT_SUCCESS);
 }

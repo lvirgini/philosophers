@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:17:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 17:19:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/24 12:15:28 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	get_rules(int argc, char **argv, t_rules *rules)
 	rules->time_to_eat = mini_atoi(argv[3]);
 	rules->time_to_sleep = mini_atoi(argv[4]);
 	rules->nb_meal = nb_meal;
-	gettimeofday(&(rules)->begin, NULL);
+	rules->able_to_write = true;
 	return (check_rules(rules));
 }

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:16:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 17:14:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/24 14:36:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,25 @@ int		create_philo_thread(t_philo	*philo, int nb_philo)
 		if (pthread_create(&(philo + i)->thrd_id, NULL, &routine,
 				philo + i) != 0)
 			return (FAILLURE);
-		pthread_detach((philo + i)->thrd_id);
+		//pthread_detach((philo + i)->thrd_id);
 		i++;
 	}
+	return (SUCCESS);
+}
+
+
+void		join_philo_thread(t_philo *philo, int nb_philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_join((philo + i)->thrd_id, NULL);
+	//	printf("philo %d join\n", i);
+		i++;
+	}
+}
 /*	i = 0;
 	while (i < nb_philo)
 	{
@@ -50,5 +66,4 @@ int		create_philo_thread(t_philo	*philo, int nb_philo)
 		pthread_join((philo + i)->thrd_id, NULL);
 		i++;
 	}*/
-	return (SUCCESS);
-}
+

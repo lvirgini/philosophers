@@ -6,29 +6,40 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:10:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 17:32:07 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 10:24:29 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_status(int philo_id, int status, struct timeval begin)
+void	print_status(t_philo *philo, int status)
 {
-	static			mutex;
-	struct timeval	time;
-	static char		*str_status[5] = {
+	static pthread_mutex_t	mutex;
+	static struct timeval	begin = {0};
+	struct timeval			now;
+	static char				*str_status[5] = {
 		"has taken a fork",
 		"is eating",
 		"is sleeping",
 		"is thinking",
 		"died",
 	};
-	if begin == NULL
-		init mutex // initialise une seule fois le mutex
-	//pthread_mutex_init()
-	gettimeofday(&time, NULL);
-	printf("%ld ms\t%d %s\n",get_diff_time_ms(begin, time), philo_id, str_status[status]);
-}
 
-/// faire une static dans la structure 
-// mettre la static a 1 si 1 mort et ne pas rentrer dans la fonction print
+	if (begin.tv_sec == 0 && begin.tv_usec == 0)
+	{
+		gettimeofday(&begin, NULL);
+		pthread_mutex_init(&mutex, NULL);
+	}
+	pthread_mutex_lock(&mutex);
+	if (philo != NULL && philo->rules->able_to_write == true)
+	{
+		gettimeofday(&now, NULL);
+		printf("%ld ms\t%d %s\n",get_diff_time_ms(begin, now), philo->id, str_status[status]);
+	}
+	if (status == IS_DEAD)//
+	{
+		printf("LAST EAT = %ld\n", get_diff_time_ms(philo->last_eat, now));
+		philo->rules->able_to_write = false;
+	}
+	pthread_mutex_unlock(&mutex);
+}

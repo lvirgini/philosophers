@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 20:57:57 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/24 12:18:00 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 ** includes header from philosophers
 */
 
-# include "struct_and_utils.h"
+# include "philo_utils.h"
+# include "philo_rules.h"
 # include "philo_fork.h"
 # include "philo_time.h"
 # include "philo_philo.h"
@@ -39,11 +40,15 @@
 ** philosopher 0 = 1st
 ** forks 0 = between last and 1st.
 **
-** fork 0 | philo 0 | fork 1 | philo 1 | ..
+**  philo n-1	| fork n-1	| philo n	| fork n	| philo n+1	...
+**				|			|			|			|
+**			 	 (fork_left | philo 0	| fork_right)	
+**	philo_last	|fork_right)			( fork left	| philo 1 | fork right)
+**
 */
 
 /*
-** errors
+** Errors
 */
 
 enum	e_error
@@ -53,13 +58,21 @@ enum	e_error
 	ERR_THREAD_INIT,
 };
 
+int		philo_error(int nb_error, t_dinner_table *table);
+
+/*
+** Parsing
+*/
+
 int		parse_args(int argc, char **argv, t_dinner_table *table,
 			t_rules *rules);
-int		get_rules(int argc, char **argv, t_rules *rules);
-int		philo_error(int nb_error, t_dinner_table *table);
-int		create_philo_thread(t_philo	*philo, int nb_philo);
+
+/*
+** Start and routines
+*/
+
 void	*routine(void *philosopher);
 void	start_simulation(t_dinner_table *table, t_rules *rules);
-void	print_status(int philo_id, int status, struct timeval begin);
+void	print_status(t_philo *philo, int status);
 
 #endif
