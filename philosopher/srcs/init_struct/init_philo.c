@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:48:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/24 12:18:50 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 11:17:36 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ t_philo	*malloc_philos(int nb_philo, t_rules *rules, t_fork *forks)
 	else
 	{
 		philos[0] = init_philo(1, rules, forks + nb_philo - 1, forks);
-		printf("INIT PHILO = ID = %d\n\tleft = %p\n\tright = %p\n", (philos)->id, (philos)->fork_left, (philos)->fork_right);
 		i = 1;
 		while (i < nb_philo)
 		{
 			philos[i] = init_philo((i + 1), rules, (forks + i - 1),
 					(forks + i));
-			printf("INIT PHILO = ID = %d\n\tleft = %p\n\tright = %p\n", (philos + i)->id, (philos + i)->fork_left, (philos + i)->fork_right);
 			i++;
 		}
 	}

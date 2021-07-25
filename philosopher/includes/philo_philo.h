@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 21:45:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/24 13:41:43 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 11:12:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include "philosophers.h"
 
+/*
+** fork left	= &fork right philo[n - 1]
+** fork right	= &fork left philo [n + 1]
+*/
+
 typedef struct s_philo
 {
 	int				id;
@@ -22,8 +27,8 @@ typedef struct s_philo
 	int				nb_eat;
 	struct timeval	last_eat;
 	t_rules			*rules;
-	t_fork			*fork_right; // adresse identique a philo + 1 fork left
-	t_fork			*fork_left;	 // adresse identique a philo - 1 fork right
+	t_fork			*fork_right;
+	t_fork			*fork_left;
 	pthread_t		thrd_id;
 }	t_philo;
 

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:10:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 10:24:29 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 11:32:51 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ void	print_status(t_philo *philo, int status)
 	static struct timeval	begin = {0};
 	struct timeval			now;
 	static char				*str_status[5] = {
-		"has taken a fork",
-		"is eating",
-		"is sleeping",
-		"is thinking",
-		"died",
+		"has taken a fork",	"is eating", "is sleeping",
+		"is thinking", "died",
 	};
 
 	if (begin.tv_sec == 0 && begin.tv_usec == 0)
@@ -34,12 +31,10 @@ void	print_status(t_philo *philo, int status)
 	if (philo != NULL && philo->rules->able_to_write == true)
 	{
 		gettimeofday(&now, NULL);
-		printf("%ld ms\t%d %s\n",get_diff_time_ms(begin, now), philo->id, str_status[status]);
+		printf("%ld ms %d %s\n", get_diff_time_ms(begin, now), philo->id,
+			str_status[status]);
 	}
-	if (status == IS_DEAD)//
-	{
-		printf("LAST EAT = %ld\n", get_diff_time_ms(philo->last_eat, now));
+	if (status == IS_DEAD)
 		philo->rules->able_to_write = false;
-	}
 	pthread_mutex_unlock(&mutex);
 }

@@ -6,44 +6,28 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:16:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/24 14:36:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 11:16:52 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-/*
-void	*test(void *philosopher)
-{
-	t_philo	*philo;
 
-	philo = (t_philo *)philosopher;
-
-	while (philo->status != IS_EATING)
-		;
-
-	printf("philo n°%d\n", philo->id);
-	return (NULL);
-}*/
-
-int		create_philo_thread(t_philo	*philo, int nb_philo)
+int	create_philo_thread(t_philo	*philo, int nb_philo)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb_philo)
 	{
-		printf("philo ID = %d\n", (philo + i)->id);
 		if (pthread_create(&(philo + i)->thrd_id, NULL, &routine,
 				philo + i) != 0)
 			return (FAILLURE);
-		//pthread_detach((philo + i)->thrd_id);
 		i++;
 	}
 	return (SUCCESS);
 }
 
-
-void		join_philo_thread(t_philo *philo, int nb_philo)
+void	join_philo_thread(t_philo *philo, int nb_philo)
 {
 	int	i;
 
@@ -51,19 +35,6 @@ void		join_philo_thread(t_philo *philo, int nb_philo)
 	while (i < nb_philo)
 	{
 		pthread_join((philo + i)->thrd_id, NULL);
-	//	printf("philo %d join\n", i);
 		i++;
 	}
 }
-/*	i = 0;
-	while (i < nb_philo)
-	{
-		philo[i].status = IS_THINKING;
-		i++;
-	}
-	while (i < nb_philo)
-	{
-		pthread_join((philo + i)->thrd_id, NULL);
-		i++;
-	}*/
-

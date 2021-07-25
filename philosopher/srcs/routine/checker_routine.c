@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 10:22:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 11:00:07 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	make_it_start(t_philo	*philo, t_fork *forks, int nb_philo)
 	int	i;
 
 	print_status(NULL, 0);
+	ms_sleep(10);
 	i = 0;
 	while (i < nb_philo)
 	{
@@ -55,13 +56,25 @@ static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 		last_eat = get_time_in_ms(philo[nb_philo].last_eat);
 		if (last_eat > 0
 			&& get_diff_time_ms(philo[nb_philo].last_eat, now) > time_to_die)
-		{
-			//printf("%ld, %ld\n", get_diff_time_ms(philo[nb_philo].last_eat, now), time_to_die);
 			return (nb_philo);
-		}
-	//printf("%ld\n",  get_time_in_ms(now) - last_eat);
 	}
 	return (-1);
+}
+
+static int	check_max_eat(t_philo *philo, int nb_philo, int max_eat)
+{
+	int		i;
+
+	if (max_eat == -1)
+		return (FAILLURE);
+	i = 0;
+	while (i < nb_philo)
+	{
+		if (philo[i].nb_eat < max_eat)
+			return (FAILLURE);
+		i++;
+	}
+	return (SUCCESS);
 }
 
 void	start_simulation(t_dinner_table *table, t_rules *rules)
@@ -74,7 +87,7 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 	nb_philo = table->nb_philo;
 	philo = table->philos;
 	make_it_start(philo, table->forks, nb_philo);
-	while (1)
+	while (check_max_eat(philo, nb_philo, rules->nb_meal) == FAILLURE)
 	{
 		i = 0;
 		while (i < nb_philo)

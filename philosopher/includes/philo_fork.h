@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 23:23:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/21 14:29:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/25 11:13:55 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 # define PHILO_FORK_H
 
 # include "philosophers.h"
-
-/*
-**   forks[i].status = x;
-**	(fork + i)->status = x;
-*/
 
 enum	e_fork
 {
