@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 11:25:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 11:29:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 12:42:54 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static void	drop_fork(t_fork *fork)
 {
+	pthread_mutex_lock(&(fork->m_fork));
 	fork->status = IS_FREE;
+	pthread_mutex_unlock(&(fork->m_fork));
 }
 
 static int	take_fork(t_fork *fork)
@@ -39,18 +41,23 @@ void	eating_routine(t_philo *philo)
 	{
 		if (take_fork(philo->fork_left) == SUCCESS)
 		{
-			print_status(philo, TAKEN_FORK);
-			print_status(philo, TAKEN_FORK);
+			print_status(philo, TAKEN_FORK, philo->rules);
+			print_status(philo, TAKEN_FORK, philo->rules);
 			gettimeofday(&(philo)->last_eat, NULL);
-			philo->status = IS_EATING;
+			pthread_mutex_lock(&philo->m_status);
 			philo->nb_eat += 1;
-			print_status(philo, IS_EATING);
+			if (philo->nb_eat == philo->rules->nb_meal)
+				philo->status = FINISHED_EATING;
+			else
+				philo->status = IS_EATING;
+			pthread_mutex_unlock(&philo->m_status);
+			print_status(philo, IS_EATING, philo->rules);
 			ms_sleep(philo->rules->time_to_eat);
 			drop_fork(philo->fork_right);
 			drop_fork(philo->fork_left);
 		}
 		else if (philo->fork_left == NULL)
-			print_status(philo, TAKEN_FORK);
+			print_status(philo, TAKEN_FORK, philo->rules);
 		else
 			drop_fork(philo->fork_right);
 	}

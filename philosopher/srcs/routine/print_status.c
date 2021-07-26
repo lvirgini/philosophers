@@ -6,15 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:10:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 11:32:51 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 11:04:26 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_status(t_philo *philo, int status)
+void	print_status(t_philo *philo, int status, t_rules *rules)
 {
-	static pthread_mutex_t	mutex;
 	static struct timeval	begin = {0};
 	struct timeval			now;
 	static char				*str_status[5] = {
@@ -22,13 +21,10 @@ void	print_status(t_philo *philo, int status)
 		"is thinking", "died",
 	};
 
+	pthread_mutex_lock(&rules->m_print);
 	if (begin.tv_sec == 0 && begin.tv_usec == 0)
-	{
 		gettimeofday(&begin, NULL);
-		pthread_mutex_init(&mutex, NULL);
-	}
-	pthread_mutex_lock(&mutex);
-	if (philo != NULL && philo->rules->able_to_write == true)
+	if (philo != NULL && rules->able_to_write == true)
 	{
 		gettimeofday(&now, NULL);
 		printf("%ld ms %d %s\n", get_diff_time_ms(begin, now), philo->id,
@@ -36,5 +32,5 @@ void	print_status(t_philo *philo, int status)
 	}
 	if (status == IS_DEAD)
 		philo->rules->able_to_write = false;
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&rules->m_print);
 }

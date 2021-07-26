@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:58:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/23 12:06:47 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 10:03:07 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_all_table(t_dinner_table *table)
 	if (table)
 	{
 		if (table->philos)
-			free_philos(table->philos);
+			free_philos(table->philos, table->nb_philo);
 		if (table->forks)
 			free_forks(table->forks, table->nb_philo);
 	}

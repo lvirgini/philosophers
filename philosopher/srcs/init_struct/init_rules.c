@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:17:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/24 12:15:28 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 10:24:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	get_rules(int argc, char **argv, t_rules *rules)
 	rules->time_to_sleep = mini_atoi(argv[4]);
 	rules->nb_meal = nb_meal;
 	rules->able_to_write = true;
+	pthread_mutex_init(&rules->m_print, NULL);
 	return (check_rules(rules));
 }

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 21:41:45 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:18:59 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 10:29:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct s_dinner_table
 	int			nb_philo;
 	t_philo		*philos;
 	t_fork		*forks;
-	int			all_alive;
 	int			if_all_eat;
 }	t_dinner_table;
 

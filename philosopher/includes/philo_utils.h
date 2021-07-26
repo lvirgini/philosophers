@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:28:19 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/24 12:18:04 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 12:35:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum	e_status
 	IS_SLEEPING,
 	IS_THINKING,
 	IS_DEAD,
+	FINISHED_EATING,
 };
 
 /*

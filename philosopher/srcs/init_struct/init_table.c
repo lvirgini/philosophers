@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:18:32 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:18:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 10:32:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	get_table(char **argv, t_dinner_table *table)
 		return (FAILLURE);
 	table->forks = NULL;
 	table->philos = NULL;
-	table->all_alive = true;
 	table->if_all_eat = false;
 	table->nb_philo = nb_philo;
 	return (SUCCESS);
