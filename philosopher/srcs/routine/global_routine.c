@@ -6,11 +6,15 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 13:01:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 14:30:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+/*
+** Sleeping
+*/
 
 static void	sleeping_routine(t_philo *philo)
 {
@@ -21,6 +25,10 @@ static void	sleeping_routine(t_philo *philo)
 	ms_sleep(philo->rules->time_to_sleep);
 }
 
+/*
+** Thinking
+*/
+
 static void	thinking_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->m_status);
@@ -29,7 +37,13 @@ static void	thinking_routine(t_philo *philo)
 	print_status(philo, IS_THINKING, philo->rules);
 }
 
-int		can_write(t_rules *rules)
+/*
+** if rules->able_to_print == false
+** => one philo is already dead
+** stop all philo's routine
+*/
+
+static int	can_write(t_rules *rules)
 {
 	pthread_mutex_lock(&rules->m_print);
 	if (rules->able_to_write == false)
@@ -41,66 +55,29 @@ int		can_write(t_rules *rules)
 	return (true);
 }
 
-void	*routine(void *philosopher)
-{
-	t_philo		*philo;
-	int			max_eat;
-
-	philo = (t_philo *)philosopher;
-	max_eat = philo->rules->nb_meal;
-	ms_sleep(1);
-//	pthread_mutex_lock(&philo->m_status);
-	gettimeofday(&(philo)->last_eat, NULL);
-//	pthread_mutex_unlock(&philo->m_status);
-	while (max_eat == -1 || philo->nb_eat < max_eat)
-	{
-		if (philo->status == FINISHED_EATING || philo->status == IS_DEAD
-			|| can_write(philo->rules) == false)
-			return (NULL);
-		else if (philo->status == IS_THINKING)
-			eating_routine(philo);
-		else if (philo->status == IS_EATING)
-			sleeping_routine(philo);
-		else if (philo->status == IS_SLEEPING)
-			thinking_routine(philo);
-	//	pthread_mutex_unlock(&philo->m_status);
-	}
-	return (NULL);
-}
 /*
+**  while philo is not dead || philo finished eating 
+**	|| main stop able to write some status == one other philo is dead
+**
+** 	EAT then SLEEP then THINK
+*/
+
 void	*routine(void *philosopher)
 {
 	t_philo		*philo;
-	int			max_eat;
 
 	philo = (t_philo *)philosopher;
-	max_eat = philo->rules->nb_meal;
-	ms_sleep(10);
-	pthread_mutex_lock(&philo->m_status);
+	ms_sleep(1);
 	gettimeofday(&(philo)->last_eat, NULL);
-	pthread_mutex_unlock(&philo->m_status);
-	while (1)
+	while (philo->status != FINISHED_EATING && philo->status != IS_DEAD
+		&& can_write(philo->rules) == true)
 	{
-		//pthread_mutex_lock(&philo->m_status);
-		if (philo->status == IS_DEAD
-			&& (max_eat != -1 || philo->nb_eat >= max_eat))
-		{
-			//pthread_mutex_unlock(&philo->m_status);
-			return (NULL);
-		}	
 		if (philo->status == IS_THINKING)
 			eating_routine(philo);
 		else if (philo->status == IS_EATING)
 			sleeping_routine(philo);
 		else if (philo->status == IS_SLEEPING)
 			thinking_routine(philo);
-	//	pthread_mutex_unlock(&philo->m_status);
-		usleep(1);
 	}
-			
-//	}
-	//printf("philo %d status = %d\n", philo->id, philo->status);
-
 	return (NULL);
 }
-*/

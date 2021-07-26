@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:17:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 10:24:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 15:21:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static int	check_rules(t_rules *rules)
 {
 	if (rules->time_to_eat < 0 || rules->time_to_sleep < 0
 		|| rules->time_to_die < 0)
+	{
+		pthread_mutex_destroy(&rules->m_print);
 		return (FAILLURE);
+	}
 	return (SUCCESS);
 }
 
@@ -38,4 +41,10 @@ int	get_rules(int argc, char **argv, t_rules *rules)
 	rules->able_to_write = true;
 	pthread_mutex_init(&rules->m_print, NULL);
 	return (check_rules(rules));
+}
+
+void	destroy_rules(t_rules *rules)
+{
+	if (rules)
+		pthread_mutex_destroy(&rules->m_print);
 }

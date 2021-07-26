@@ -6,62 +6,63 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 12:55:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 15:41:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	make_it_start(t_philo *philo, t_fork *forks, int nb_philo)
+/*
+** For start simulation make fork in order
+**		for philo impair 
+**		sleep(2ms)
+**		for philo pair
+**	else they can take each a fork and nobody can eat
+*/
+
+static void	init_the_begin_time(t_rules *rules)
+{
+	pthread_mutex_lock(&rules->m_print);
+	gettimeofday(&rules->begin, NULL);
+	pthread_mutex_unlock(&rules->m_print);
+}
+
+static void	make_it_start(t_fork *forks, int nb_philo, t_rules *rules)
 {
 	int	i;
-	(void)philo;
+
 	i = 0;
+	init_the_begin_time(rules);
 	while (i < nb_philo)
 	{
 		pthread_mutex_lock(&forks[i].m_fork);
 		forks[i].status = IS_FREE;
 		pthread_mutex_unlock(&forks[i].m_fork);
 		i++;
+		if (i % 2)
+			i++;
 	}
-/*	i = 0;
-	while (i < nb_philo)
-	{
-		pthread_mutex_lock(&philo[i].m_status);
-		philo[i].status = IS_THINKING;
-		pthread_mutex_unlock(&philo[i].m_status);
-		i += 2;
-	}
-	ms_sleep(1);
+	ms_sleep(2);
 	i = 1;
 	while (i < nb_philo)
 	{
-		pthread_mutex_lock(&philo[i].m_status);
-		philo[i].status = IS_THINKING;
-		pthread_mutex_unlock(&philo[i].m_status);
-		i += 2;
-	}*/
-	ms_sleep(1);
-}
-/*
-static void	stop_simulation(t_philo *philo, int nb_philo)
-{
-	while (nb_philo--)
-	{
-		pthread_mutex_lock(&philo[nb_philo].m_status);
-		philo[nb_philo].status = IS_DEAD;
-		pthread_mutex_unlock(&philo[nb_philo].m_status);
+		pthread_mutex_lock(&forks[i].m_fork);
+		forks[i].status = IS_FREE;
+		pthread_mutex_unlock(&forks[i].m_fork);
+		i++;
+		if (!(i % 2))
+			i++;
 	}
 }
-*/
+
 static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 {
 	struct timeval	now;
 	t_ms			last_eat;
 
-	gettimeofday(&now, NULL);
 	while (nb_philo--)
 	{
+		gettimeofday(&now, NULL);
 		last_eat = get_time_in_ms(philo[nb_philo].last_eat);
 		if (last_eat > 0
 			&& get_diff_time_ms(philo[nb_philo].last_eat, now) > time_to_die)
@@ -100,7 +101,7 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 
 	nb_philo = table->nb_philo;
 	philo = table->philos;
-	make_it_start(philo, table->forks, nb_philo);
+	make_it_start(table->forks, nb_philo, rules);
 	ms_sleep(10);
 	while (check_max_eat(philo, nb_philo, rules->nb_meal) == FAILLURE)
 	{
@@ -111,7 +112,6 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 			if (nb_philo_dead != -1)
 			{
 				print_status(philo + nb_philo_dead, IS_DEAD, rules);
-				//stop_simulation(philo, nb_philo);
 				return ;
 			}	
 			i++;

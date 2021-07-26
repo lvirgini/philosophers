@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/07/22 14:36:45 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/07/26 15:45:56 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIB		= pthread
 # ----------------- #
 
 CC = 			gcc
-CFLAG =			-Wall -Werror -Wextra -g
+CFLAG =			-Wall -Werror -Wextra
 CFLAG_LEAK = 	$(CFLAG) -fsanitize=leak
 CFLAG_ADDRESS = $(CFLAG) -fsanitize=address
 CFLAG_THREAD = 	$(CFLAG) -fsanitize=thread 

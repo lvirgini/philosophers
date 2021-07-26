@@ -6,18 +6,18 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 11:33:32 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 14:45:57 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /*
-** check entrée : si tout conforme
-** initialise les philosophe
-** creation de la simulation
-** check si il y a un mort
-** fin de la simulation
+** parsing args
+** create all structures and needed
+** start simulation
+** join all thread
+** free all malloc
 */
 
 int	main(int argc, char **argv)

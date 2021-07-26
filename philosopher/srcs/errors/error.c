@@ -6,27 +6,15 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:58:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 10:03:07 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 15:23:38 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /*
-** if one philosophers, can't eat because of one fork
-** if argv < 4 > 6
+** Helpfull for using program
 */
-
-void	free_all_table(t_dinner_table *table)
-{
-	if (table)
-	{
-		if (table->philos)
-			free_philos(table->philos, table->nb_philo);
-		if (table->forks)
-			free_forks(table->forks, table->nb_philo);
-	}
-}
 
 static void	print_formating_args(void)
 {

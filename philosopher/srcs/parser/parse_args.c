@@ -6,17 +6,23 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 14:43:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/22 19:20:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/26 14:23:26 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/*
+** init rules and table structure
+** malloc and init fork
+** malloc and init philo
+*/
+
 int	parse_args(int argc, char **argv, t_dinner_table *table, t_rules *rules)
 {
 	if (argc < 4 || argc > 6
 		|| get_rules(argc, argv, rules) == FAILLURE
-		|| get_table(argv, table) == FAILLURE)
+		|| get_table(argv, table, rules) == FAILLURE)
 		return (philo_error(ERR_ARG, NULL));
 	table->forks = malloc_forks(table->nb_philo);
 	if (!table->forks)
