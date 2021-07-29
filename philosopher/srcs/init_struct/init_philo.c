@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:48:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 13:38:07 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 17:32:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@ static t_philo	init_philo( int id, t_rules *rules, t_fork *left, t_fork *right)
 	return (philo);
 }
 
+static t_philo	*init_philo_mutex(t_philo *philo, int nb_philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_philo)
+	{
+		if (pthread_mutex_init(&philo[i].m_status, NULL) != 0)
+		{
+			free_philos(philo, i);
+			return (NULL);
+		}
+		i++;
+	}
+	return (philo);
+}
+
 t_philo	*malloc_philos(int nb_philo, t_rules *rules, t_fork *forks)
 {
 	t_philo	*philos;
@@ -37,24 +54,17 @@ t_philo	*malloc_philos(int nb_philo, t_rules *rules, t_fork *forks)
 	if (!philos)
 		return (NULL);
 	if (nb_philo == 1)
-	{
 		philos[0] = init_philo(1, rules, NULL, forks);
-		pthread_mutex_init(&philos[0].m_status, NULL);
-	}	
 	else
-	{
 		philos[0] = init_philo(1, rules, forks + nb_philo - 1, forks);
-		pthread_mutex_init(&philos[0].m_status, NULL);
-		i = 1;
-		while (i < nb_philo)
-		{
-			philos[i] = init_philo((i + 1), rules, (forks + i - 1),
-					(forks + i));
-			pthread_mutex_init(&philos[i].m_status, NULL);
-			i++;
-		}
+	i = 1;
+	while (i < nb_philo)
+	{
+		philos[i] = init_philo((i + 1), rules, (forks + i - 1),
+				(forks + i));
+		i++;
 	}
-	return (philos);
+	return (init_philo_mutex(philos, nb_philo));
 }
 
 void	free_philos(t_philo *philo, int nb_philo)
