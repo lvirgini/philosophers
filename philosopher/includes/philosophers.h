@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 11:59:59 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 09:03:41 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void	*routine(void *philosopher);
 void	eating_routine(t_philo *philo);
 void	start_simulation(t_dinner_table *table, t_rules *rules);
 void	print_status(t_philo *philo, int status, t_rules *rules);
+int		can_write(t_rules *rules);
 
 #endif

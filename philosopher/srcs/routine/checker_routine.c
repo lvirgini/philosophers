@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 15:41:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 15:12:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,74 @@
 **	else they can take each a fork and nobody can eat
 */
 
-static void	init_the_begin_time(t_rules *rules)
+static void	init_the_begin_time(t_rules *rules, t_philo *philo, int nb_philo)
 {
 	pthread_mutex_lock(&rules->m_print);
 	gettimeofday(&rules->begin, NULL);
+	while (nb_philo--)
+	{
+		philo[nb_philo].last_eat.tv_sec = rules->begin.tv_sec;
+		philo[nb_philo].last_eat.tv_usec = rules->begin.tv_usec;
+	}	
 	pthread_mutex_unlock(&rules->m_print);
 }
 
-static void	make_it_start(t_fork *forks, int nb_philo, t_rules *rules)
+static void	make_it_start(t_fork *forks, int nb_philo, t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	init_the_begin_time(rules);
+	(void)forks;
+
+
 	while (i < nb_philo)
 	{
-		pthread_mutex_lock(&forks[i].m_fork);
-		forks[i].status = IS_FREE;
-		pthread_mutex_unlock(&forks[i].m_fork);
-		i++;
-		if (i % 2)
-			i++;
-	}
-	ms_sleep(2);
-	i = 1;
-	while (i < nb_philo)
-	{
-		pthread_mutex_lock(&forks[i].m_fork);
-		forks[i].status = IS_FREE;
-		pthread_mutex_unlock(&forks[i].m_fork);
-		i++;
 		if (!(i % 2))
-			i++;
+		{
+			pthread_mutex_lock(&philo[i].m_status);
+			philo[i].status = IS_THINKING;
+			pthread_mutex_unlock(&philo[i].m_status);
+		}
+		i++;
 	}
+	ms_sleep(2, NULL);
+	i = 0;
+	while (i < nb_philo)
+	{
+		if (i % 2)
+		{
+			pthread_mutex_lock(&philo[i].m_status);
+			philo[i].status = IS_THINKING;
+			pthread_mutex_unlock(&philo[i].m_status);
+		}
+		i++;
+	}
+/*
+	while (i < nb_philo)
+	{
+		if (i % 3)
+		{
+			pthread_mutex_lock(&forks[i].m_fork);
+			forks[i].status = IS_FREE;
+		//	printf("%d ", i);
+			pthread_mutex_unlock(&forks[i].m_fork);
+		}	
+		i++;
+	}
+	ms_sleep(2, NULL);
+//		printf("\n ");
+	i = 0;
+	while (i < nb_philo)
+	{
+		if (!(i % 3))
+		{
+			pthread_mutex_lock(&forks[i].m_fork);
+			forks[i].status = IS_FREE;
+			pthread_mutex_unlock(&forks[i].m_fork);
+		//	printf("%d ", i);
+		}
+		i++;
+	}*/
 }
 
 static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
@@ -63,10 +98,12 @@ static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 	while (nb_philo--)
 	{
 		gettimeofday(&now, NULL);
-		last_eat = get_time_in_ms(philo[nb_philo].last_eat);
-		if (last_eat > 0
-			&& get_diff_time_ms(philo[nb_philo].last_eat, now) > time_to_die)
+		last_eat = get_diff_time_ms(philo[nb_philo].last_eat, now);
+		if (last_eat > 0 && last_eat > time_to_die)
+		{
+			printf("IS_DEAD    => %ld now = %ld, last eat = %ld\n",  last_eat, get_time_in_ms(now), get_time_in_ms(philo[nb_philo].last_eat));
 			return (nb_philo);
+		}	
 	}
 	return (-1);
 }
@@ -101,8 +138,9 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 
 	nb_philo = table->nb_philo;
 	philo = table->philos;
-	make_it_start(table->forks, nb_philo, rules);
-	ms_sleep(10);
+	init_the_begin_time(rules, philo, nb_philo);
+	make_it_start(table->forks, nb_philo, philo);
+	ms_sleep(10, NULL);
 	while (check_max_eat(philo, nb_philo, rules->nb_meal) == FAILLURE)
 	{
 		i = 0;
@@ -116,5 +154,6 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 			}	
 			i++;
 		}
+		ms_sleep(1, NULL);
 	}
 }

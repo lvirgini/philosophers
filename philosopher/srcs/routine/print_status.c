@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:10:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 15:38:05 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 13:59:27 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,21 @@ void	print_status(t_philo *philo, int status, t_rules *rules)
 	};
 
 	pthread_mutex_lock(&rules->m_print);
-	if (philo != NULL && rules->able_to_write == true)
+	gettimeofday(&now, NULL);
+	if (status == IS_DEAD)
 	{
-		gettimeofday(&now, NULL);
+		printf("%ld ms %d %s\n", get_diff_time_ms(rules->begin, now), philo->id,
+			str_status[status]);
+		printf("%ld ms %d %s\n", get_diff_time_ms(rules->begin, now), philo->id,
+			str_status[status]);
+		printf("PRINT STATUS => %ld now = %ld begin = %ld\n",  
+		get_diff_time_ms(philo->last_eat, now), get_time_in_ms(now), get_time_in_ms(rules->begin));
+		philo->rules->able_to_write = false;
+	}
+	else if (philo != NULL && rules->able_to_write == true)
+	{
 		printf("%ld ms %d %s\n", get_diff_time_ms(rules->begin, now), philo->id,
 			str_status[status]);
 	}
-	if (status == IS_DEAD)
-		philo->rules->able_to_write = false;
 	pthread_mutex_unlock(&rules->m_print);
 }

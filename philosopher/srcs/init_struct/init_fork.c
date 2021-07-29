@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:24:45 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 14:14:16 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 13:38:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_fork	*malloc_forks(int nb_philo)
 		return (NULL);
 	while (nb_philo--)
 	{
-		forks[nb_philo].status = IS_TAKEN;
+		forks[nb_philo].status = IS_FREE;
 		pthread_mutex_init(&forks[nb_philo].m_fork, NULL);
 	}
 	return (forks);

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 14:30:05 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 15:10:16 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	sleeping_routine(t_philo *philo)
 	philo->status = IS_SLEEPING;
 	pthread_mutex_unlock(&philo->m_status);
 	print_status(philo, IS_SLEEPING, philo->rules);
-	ms_sleep(philo->rules->time_to_sleep);
+	ms_sleep(philo->rules->time_to_sleep, philo->rules);
 }
 
 /*
@@ -43,8 +43,10 @@ static void	thinking_routine(t_philo *philo)
 ** stop all philo's routine
 */
 
-static int	can_write(t_rules *rules)
+int	can_write(t_rules *rules)
 {
+	if (!rules)
+		return (true);
 	pthread_mutex_lock(&rules->m_print);
 	if (rules->able_to_write == false)
 	{
@@ -55,6 +57,18 @@ static int	can_write(t_rules *rules)
 	return (true);
 }
 
+
+int	it_is_start(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->m_status);
+	if ( philo->status == IS_THINKING)
+	{
+		pthread_mutex_unlock(&philo->m_status);
+		return (true);
+	}
+	pthread_mutex_unlock(&philo->m_status);
+	return (false);
+}
 /*
 **  while philo is not dead || philo finished eating 
 **	|| main stop able to write some status == one other philo is dead
@@ -67,8 +81,8 @@ void	*routine(void *philosopher)
 	t_philo		*philo;
 
 	philo = (t_philo *)philosopher;
-	ms_sleep(1);
-	gettimeofday(&(philo)->last_eat, NULL);
+	while (it_is_start(philo) == false)
+		usleep(100);
 	while (philo->status != FINISHED_EATING && philo->status != IS_DEAD
 		&& can_write(philo->rules) == true)
 	{
@@ -78,6 +92,7 @@ void	*routine(void *philosopher)
 			sleeping_routine(philo);
 		else if (philo->status == IS_SLEEPING)
 			thinking_routine(philo);
+		usleep(100);
 	}
 	return (NULL);
 }

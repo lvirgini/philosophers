@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 19:02:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/24 13:33:59 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 14:14:06 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@
 ** get time ending and stop when actual time is egal.
 */
 
-void	ms_sleep(t_ms time_to_wait)
+void	ms_sleep(t_ms time_to_wait, t_rules *rules)
 {
 	struct timeval	time_actual;
 	t_ms			time_to_stop;
 
 	gettimeofday(&time_actual, NULL);
 	time_to_stop = get_time_in_ms(time_actual) + time_to_wait;
-	while (get_time_in_ms(time_actual) < time_to_stop)
+	while (get_time_in_ms(time_actual) < time_to_stop
+		&& can_write(rules) == true)
 	{
 		usleep(100);
 		gettimeofday(&time_actual, NULL);

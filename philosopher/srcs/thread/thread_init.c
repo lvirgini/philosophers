@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:16:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 15:20:52 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 14:04:04 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	make_it_stop(t_rules *rules)
 	pthread_mutex_lock(&rules->m_print);
 	rules->able_to_write = false;
 	pthread_mutex_unlock(&rules->m_print);
-	ms_sleep(100);
+	ms_sleep(20, NULL);
 }
 
 int	create_philo_thread(t_philo	*philo, int nb_philo)
