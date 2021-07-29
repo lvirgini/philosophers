@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 15:10:16 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/07/29 16:26:43 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ int	can_write(t_rules *rules)
 	return (true);
 }
 
-
 int	it_is_start(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->m_status);
-	if ( philo->status == IS_THINKING)
+	if (philo->status == IS_THINKING)
 	{
 		pthread_mutex_unlock(&philo->m_status);
 		return (true);
@@ -92,7 +91,6 @@ void	*routine(void *philosopher)
 			sleeping_routine(philo);
 		else if (philo->status == IS_SLEEPING)
 			thinking_routine(philo);
-		usleep(100);
 	}
 	return (NULL);
 }
