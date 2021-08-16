@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 16:26:43 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/16 12:11:03 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	*routine(void *philosopher)
 
 	philo = (t_philo *)philosopher;
 	while (it_is_start(philo) == false)
-		usleep(100);
+		usleep(10);
 	while (philo->status != FINISHED_EATING && philo->status != IS_DEAD
 		&& can_write(philo->rules) == true)
 	{
