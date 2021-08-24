@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 09:03:41 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/24 11:26:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
-# include <stdio.h> //
+# include <stdio.h>
 
 /*
 ** includes header from philosophers

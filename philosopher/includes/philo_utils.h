@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:28:19 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 16:37:02 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/24 12:31:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_UTILS_H
 
 # define LONG_MAX 2147483647
+
 typedef long	t_ms;
 
 enum e_bool
@@ -44,9 +45,11 @@ enum	e_status
 
 t_ms		mini_atoi(char *s);
 void		ft_putstr(char *s);
-char		*ft_itoa(int n);
+int			ft_philo_ltoa(long n, char *dst);
+int			ft_philo_itoa(int n, char *dst);
 void		*ft_memset(void *s, int c, size_t n);
 int			ft_isdigit(int c);
 int			ft_isspace(int c);
+char		*ft_strncpy(char *dst, const char *src, size_t n);
 
 #endif
