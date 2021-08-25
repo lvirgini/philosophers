@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:48:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 17:32:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:30:51 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_philo	init_philo( int id, t_rules *rules, t_fork *left, t_fork *right)
 	philo.id = id;
 	philo.fork_left = left;
 	philo.fork_right = right;
-	philo.status = IS_DEAD;
+	philo.status = IS_THINKING;
 	philo.rules = rules;
 	philo.last_eat.tv_sec = 0;
 	philo.last_eat.tv_usec = 0;
@@ -71,6 +71,7 @@ void	free_philos(t_philo *philo, int nb_philo)
 {
 	if (philo)
 	{
+		join_philo_thread(philo, nb_philo);
 		while (nb_philo--)
 			pthread_mutex_destroy(&(philo + nb_philo)->m_status);
 		free(philo);

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 11:25:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/16 12:18:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:25:15 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	take_fork(t_fork *fork)
 		}	
 		pthread_mutex_unlock(&(fork->m_fork));
 	}
-	ms_sleep(1, NULL);
+	ft_usleep(200);
 	return (FAILLURE);
 }
 
@@ -58,7 +58,8 @@ void	eating_routine(t_philo *philo)
 		if (philo->fork_left == NULL)
 			return ;
 		while (take_fork(philo->fork_left) != SUCCESS)
-			;
+			if (can_write(philo->rules) == FAILLURE)
+				return ;
 		print_status(philo, TAKEN_FORK, philo->rules);
 		give_spaghetti_to_the_philosopher(philo);
 		drop_fork(philo->fork_right);

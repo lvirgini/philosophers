@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 21:17:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 17:31:21 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 15:19:23 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** parsing args
 ** create all structures and needed
 ** start simulation
-** join all thread
+** join all threads
 ** free all malloc
 */
 
@@ -32,10 +32,9 @@ int	main(int argc, char **argv)
 		free_all_table(&table);
 		return (EXIT_SUCCESS);
 	}
-	if (create_philo_thread(table.philos, table.nb_philo) == FAILLURE)
-		return (philo_error(ERR_THREAD_INIT, &table));
-	start_simulation(&table, &rules);
-	join_philo_thread(table.philos, table.nb_philo);
+	if (start_simulation(&table, &rules, table.philos, table.nb_philo)
+		== FAILLURE)
+		return (EXIT_FAILURE);
 	free_all_table(&table);
 	return (EXIT_SUCCESS);
 }

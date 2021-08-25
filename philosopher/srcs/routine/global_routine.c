@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/16 12:11:03 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:57:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	thinking_routine(t_philo *philo)
 	philo->status = IS_THINKING;
 	pthread_mutex_unlock(&philo->m_status);
 	print_status(philo, IS_THINKING, philo->rules);
+	ft_usleep(10);
 }
 
 /*
@@ -68,6 +69,7 @@ int	it_is_start(t_philo *philo)
 	pthread_mutex_unlock(&philo->m_status);
 	return (false);
 }
+
 /*
 **  while philo is not dead || philo finished eating 
 **	|| main stop able to write some status == one other philo is dead
@@ -80,8 +82,6 @@ void	*routine(void *philosopher)
 	t_philo		*philo;
 
 	philo = (t_philo *)philosopher;
-	while (it_is_start(philo) == false)
-		usleep(10);
 	while (philo->status != FINISHED_EATING && philo->status != IS_DEAD
 		&& can_write(philo->rules) == true)
 	{

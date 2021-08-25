@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 21:45:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 10:00:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:50:22 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_philo
 
 t_philo		*malloc_philos(int nb_philo, t_rules *rules, t_fork *forks);
 void		free_philos(t_philo *philo, int nb_philo);
-int			create_philo_thread(t_philo	*philo, int nb_philo);
+int			create_philo_thread(t_philo	*philo);
 void		join_philo_thread(t_philo *philo, int nb_philo);
 
 #endif

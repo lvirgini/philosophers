@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:16:16 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 14:04:04 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:57:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,13 @@ static void	make_it_stop(t_rules *rules)
 	ms_sleep(20, NULL);
 }
 
-int	create_philo_thread(t_philo	*philo, int nb_philo)
+int	create_philo_thread(t_philo	*philo)
 {
-	int	i;
-
-	i = 0;
-	while (i < nb_philo)
+	if (pthread_create(&philo->thrd_id, NULL, &routine,
+			philo) != 0)
 	{
-		if (pthread_create(&(philo + i)->thrd_id, NULL, &routine,
-				philo + i) != 0)
-		{
-			make_it_stop(philo->rules);
-			return (FAILLURE);
-		}	
-		i++;
+		make_it_stop(philo->rules);
+		return (FAILLURE);
 	}
 	return (SUCCESS);
 }

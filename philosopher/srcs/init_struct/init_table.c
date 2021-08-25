@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:18:32 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/26 14:20:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:28:44 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	get_table(char **argv, t_dinner_table *table, t_rules *rules)
 
 void	free_all_table(t_dinner_table *table)
 {
+	ms_sleep(1, NULL);
 	if (table)
 	{
 		if (table->philos)

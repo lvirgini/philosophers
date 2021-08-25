@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 19:02:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/29 14:14:06 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 14:49:39 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,40 @@ void	ms_sleep(t_ms time_to_wait, t_rules *rules)
 {
 	struct timeval	time_actual;
 	t_ms			time_to_stop;
+	int				count_checker;
 
+	count_checker = 0;
 	gettimeofday(&time_actual, NULL);
 	time_to_stop = get_time_in_ms(time_actual) + time_to_wait;
-	while (get_time_in_ms(time_actual) < time_to_stop
-		&& can_write(rules) == true)
+	while (get_time_in_ms(time_actual) < time_to_stop)
 	{
-		usleep(100);
+		count_checker++;
+		if (count_checker == 50)
+		{
+			if (can_write(rules) == false)
+				return ;
+			count_checker = 0;
+		}
+		usleep(10);
+		gettimeofday(&time_actual, NULL);
+	}
+}
+
+static __useconds_t	get_time_in_us(struct timeval time)
+{
+	return (second_to_ms(time.tv_sec) * 1000 + time.tv_usec);
+}
+
+void	ft_usleep(__useconds_t time_to_wait)
+{
+	struct timeval	time_actual;
+	t_ms			time_to_stop;
+
+	gettimeofday(&time_actual, NULL);
+	time_to_stop = get_time_in_us(time_actual) + time_to_wait;
+	while (get_time_in_us(time_actual) < time_to_stop)
+	{
+		usleep(1);
 		gettimeofday(&time_actual, NULL);
 	}
 }

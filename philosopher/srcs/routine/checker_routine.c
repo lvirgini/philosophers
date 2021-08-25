@@ -6,18 +6,15 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/16 12:14:51 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 15:15:42 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /*
-** For start simulation make fork in order
-**		for philo impair 
-**		sleep(2ms)
-**		for philo pair
-**	else they can take each a fork and nobody can eat
+** the simulation is started in even / odd so that the philosophers cannot all 
+**	be blocked with a fork each.
 */
 
 static void	init_the_begin_time(t_rules *rules, t_philo *philo, int nb_philo)
@@ -32,7 +29,7 @@ static void	init_the_begin_time(t_rules *rules, t_philo *philo, int nb_philo)
 	pthread_mutex_unlock(&rules->m_print);
 }
 
-static void	make_it_start(int nb_philo, t_philo *philo)
+int	make_it_start(int nb_philo, t_philo *philo)
 {
 	int	i;
 
@@ -41,9 +38,8 @@ static void	make_it_start(int nb_philo, t_philo *philo)
 	{
 		if (!(i % 2))
 		{
-			pthread_mutex_lock(&philo[i].m_status);
-			philo[i].status = IS_THINKING;
-			pthread_mutex_unlock(&philo[i].m_status);
+			if (create_philo_thread(philo + i) == FAILLURE)
+				return (FAILLURE);
 		}
 		i++;
 	}
@@ -53,13 +49,18 @@ static void	make_it_start(int nb_philo, t_philo *philo)
 	{
 		if (i % 2)
 		{
-			pthread_mutex_lock(&philo[i].m_status);
-			philo[i].status = IS_THINKING;
-			pthread_mutex_unlock(&philo[i].m_status);
+			if (create_philo_thread(philo + i) == FAILLURE)
+				return (FAILLURE);
 		}
 		i++;
 	}
+	return (SUCCESS);
 }
+
+/*
+**	check if no philosopher is dead.
+**	if last_eat > time_to_die : he is dead.
+*/
 
 static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 {
@@ -69,12 +70,18 @@ static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
 	while (nb_philo--)
 	{
 		gettimeofday(&now, NULL);
+		pthread_mutex_lock(&philo[nb_philo].m_status);
 		last_eat = get_diff_time_ms(philo[nb_philo].last_eat, now);
+		pthread_mutex_unlock(&philo[nb_philo].m_status);
 		if (last_eat > 0 && last_eat > time_to_die)
 			return (nb_philo);
 	}
 	return (-1);
 }
+
+/*
+** checks if all the philosophers have eaten the necessary number of meals.
+*/
 
 static int	check_max_eat(t_philo *philo, int nb_philo, int max_eat)
 {
@@ -97,18 +104,16 @@ static int	check_max_eat(t_philo *philo, int nb_philo, int max_eat)
 	return (SUCCESS);
 }
 
-void	start_simulation(t_dinner_table *table, t_rules *rules)
+int 	start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
+	int nb_philo)
 {
 	int		i;
-	int		nb_philo;
 	int		nb_philo_dead;
-	t_philo	*philo;
 
-	nb_philo = table->nb_philo;
-	philo = table->philos;
 	init_the_begin_time(rules, philo, nb_philo);
-	make_it_start(nb_philo, philo);
-	ms_sleep(1, NULL);
+	if (make_it_start(nb_philo, philo) == FAILLURE)
+		return (philo_error(ERR_THREAD_INIT, table));
+	ms_sleep(2, NULL);
 	while (check_max_eat(philo, nb_philo, rules->nb_meal) == FAILLURE)
 	{
 		i = 0;
@@ -118,10 +123,11 @@ void	start_simulation(t_dinner_table *table, t_rules *rules)
 			if (nb_philo_dead != -1)
 			{
 				print_status(philo + nb_philo_dead, IS_DEAD, rules);
-				return ;
+				return (SUCCESS);
 			}	
 			i++;
 		}
 		ms_sleep(1, NULL);
 	}
+	return (SUCCESS);
 }

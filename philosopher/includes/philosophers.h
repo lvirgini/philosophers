@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/24 11:26:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/25 15:20:16 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
-# include <stdio.h>
 
 /*
 ** includes header from philosophers
@@ -73,7 +72,8 @@ int		parse_args(int argc, char **argv, t_dinner_table *table,
 
 void	*routine(void *philosopher);
 void	eating_routine(t_philo *philo);
-void	start_simulation(t_dinner_table *table, t_rules *rules);
+int		start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
+			int nb_philo);
 void	print_status(t_philo *philo, int status, t_rules *rules);
 int		can_write(t_rules *rules);
 
