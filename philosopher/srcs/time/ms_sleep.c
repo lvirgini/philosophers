@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 19:02:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/25 14:49:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:12:47 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	ms_sleep(t_ms time_to_wait, t_rules *rules)
 	}
 }
 
-static __useconds_t	get_time_in_us(struct timeval time)
+static suseconds_t	get_time_in_us(struct timeval time)
 {
 	return (second_to_ms(time.tv_sec) * 1000 + time.tv_usec);
 }
 
-void	ft_usleep(__useconds_t time_to_wait)
+void	ft_usleep(suseconds_t time_to_wait)
 {
 	struct timeval	time_actual;
 	t_ms			time_to_stop;

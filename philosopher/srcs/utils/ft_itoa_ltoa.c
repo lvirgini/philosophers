@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 12:28:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/24 12:29:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:13:16 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_intlen(unsigned int n)
 	return (i);
 }
 
-int 	ft_philo_ltoa(long n, char *dst)
+int	ft_philo_ltoa(long n, char *dst)
 {
 	int			size;
 	int			ret;
@@ -44,7 +44,7 @@ int 	ft_philo_ltoa(long n, char *dst)
 	return (ret);
 }
 
-int 	ft_philo_itoa(int n, char *dst)
+int	ft_philo_itoa(int n, char *dst)
 {
 	int			size;
 	int			ret;

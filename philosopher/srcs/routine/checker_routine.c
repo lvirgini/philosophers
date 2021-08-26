@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/25 15:15:42 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:13:25 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static int	check_max_eat(t_philo *philo, int nb_philo, int max_eat)
 	return (SUCCESS);
 }
 
-int 	start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
+int	start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
 	int nb_philo)
 {
 	int		i;
