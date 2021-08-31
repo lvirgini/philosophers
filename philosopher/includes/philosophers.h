@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 11:51:43 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/25 15:20:16 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/27 11:17:59 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int		parse_args(int argc, char **argv, t_dinner_table *table,
 */
 
 void	*routine(void *philosopher);
-void	eating_routine(t_philo *philo);
+void	eating_routine_odd(t_philo *philo);
+void	eating_routine_even(t_philo *philo);
 int		start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
 			int nb_philo);
 void	print_status(t_philo *philo, int status, t_rules *rules);

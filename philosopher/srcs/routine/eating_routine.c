@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 11:25:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/25 14:25:15 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/27 11:15:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,40 @@ static void	give_spaghetti_to_the_philosopher(t_philo *philo)
 	print_status(philo, IS_EATING, philo->rules);
 	ms_sleep(philo->rules->time_to_eat, philo->rules);
 }
-
+/*
 void	eating_routine(t_philo *philo)
+{
+	if (take_fork(philo->fork_right) == SUCCESS)
+	{
+		print_status(philo, TAKEN_FORK, philo->rules);
+		if (philo->fork_left == NULL)
+			return ;
+		while (take_fork(philo->fork_left) != SUCCESS)
+			if (can_write(philo->rules) == FAILLURE)
+				return ;
+		print_status(philo, TAKEN_FORK, philo->rules);
+		give_spaghetti_to_the_philosopher(philo);
+		drop_fork(philo->fork_right);
+		drop_fork(philo->fork_left);
+	}
+}*/
+
+void	eating_routine_even(t_philo *philo)
+{
+	if (take_fork(philo->fork_left) == SUCCESS)
+	{
+		print_status(philo, TAKEN_FORK, philo->rules);
+		while (take_fork(philo->fork_right) != SUCCESS)
+			if (can_write(philo->rules) == FAILLURE)
+				return ;
+		print_status(philo, TAKEN_FORK, philo->rules);
+		give_spaghetti_to_the_philosopher(philo);
+		drop_fork(philo->fork_right);
+		drop_fork(philo->fork_left);
+	}
+}
+
+void	eating_routine_odd(t_philo *philo)
 {
 	if (take_fork(philo->fork_right) == SUCCESS)
 	{

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/25 14:57:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/27 11:16:46 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,12 @@ void	*routine(void *philosopher)
 		&& can_write(philo->rules) == true)
 	{
 		if (philo->status == IS_THINKING)
-			eating_routine(philo);
+		{
+			if (philo->id % 2 == 0)
+				eating_routine_even(philo);
+			else
+				eating_routine_odd(philo);
+		}
 		else if (philo->status == IS_EATING)
 			sleeping_routine(philo);
 		else if (philo->status == IS_SLEEPING)
