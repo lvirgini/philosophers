@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 19:02:22 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/27 11:23:34 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/31 17:55:47 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ms_sleep(t_ms time_to_wait, t_rules *rules)
 
 static suseconds_t	get_time_in_us(struct timeval time)
 {
-	return (second_to_ms(time.tv_sec) * 1000 + time.tv_usec);
+	return (time.tv_sec * 1000 * 1000 + time.tv_usec);
 }
 
 void	ft_usleep(suseconds_t time_to_wait)

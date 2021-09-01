@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 15:15:27 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/27 11:16:46 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/31 14:29:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,16 @@ int	it_is_start(t_philo *philo)
 void	*routine(void *philosopher)
 {
 	t_philo		*philo;
+	int			even_odd;
 
 	philo = (t_philo *)philosopher;
+	even_odd = philo->id % 2;
 	while (philo->status != FINISHED_EATING && philo->status != IS_DEAD
 		&& can_write(philo->rules) == true)
 	{
 		if (philo->status == IS_THINKING)
 		{
-			if (philo->id % 2 == 0)
+			if (even_odd == 0)
 				eating_routine_even(philo);
 			else
 				eating_routine_odd(philo);

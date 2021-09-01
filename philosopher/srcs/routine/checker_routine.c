@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/26 14:13:25 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/08/31 16:37:56 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,6 @@ int	make_it_start(int nb_philo, t_philo *philo)
 }
 
 /*
-**	check if no philosopher is dead.
-**	if last_eat > time_to_die : he is dead.
-*/
-
-static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
-{
-	struct timeval	now;
-	t_ms			last_eat;
-
-	while (nb_philo--)
-	{
-		gettimeofday(&now, NULL);
-		pthread_mutex_lock(&philo[nb_philo].m_status);
-		last_eat = get_diff_time_ms(philo[nb_philo].last_eat, now);
-		pthread_mutex_unlock(&philo[nb_philo].m_status);
-		if (last_eat > 0 && last_eat > time_to_die)
-			return (nb_philo);
-	}
-	return (-1);
-}
-
-/*
 ** checks if all the philosophers have eaten the necessary number of meals.
 */
 
@@ -104,29 +82,44 @@ static int	check_max_eat(t_philo *philo, int nb_philo, int max_eat)
 	return (SUCCESS);
 }
 
+/*
+**	check if no philosopher is dead.
+**	if last_eat > time_to_die : he is dead.
+*/
+
+static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
+{
+	struct timeval	now;
+	t_ms			last_eat;
+
+	while (nb_philo)
+	{
+		nb_philo--;
+		pthread_mutex_lock(&philo[nb_philo].m_status);
+		gettimeofday(&now, NULL);
+		last_eat = get_diff_time_ms(philo[nb_philo].last_eat, now);
+		if (last_eat > 0 && last_eat > time_to_die)
+		{
+			print_status(&philo[nb_philo], IS_DEAD, philo->rules);
+			pthread_mutex_unlock(&philo[nb_philo].m_status);
+			return (true);
+		}	
+		pthread_mutex_unlock(&philo[nb_philo].m_status);
+	}
+	return (false);
+}
+
 int	start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
 	int nb_philo)
 {
-	int		i;
-	int		nb_philo_dead;
-
 	init_the_begin_time(rules, philo, nb_philo);
 	if (make_it_start(nb_philo, philo) == FAILLURE)
 		return (philo_error(ERR_THREAD_INIT, table));
-	ms_sleep(2, NULL);
+	ms_sleep(1, NULL);
 	while (check_max_eat(philo, nb_philo, rules->nb_meal) == FAILLURE)
 	{
-		i = 0;
-		while (i < nb_philo)
-		{
-			nb_philo_dead = is_dead_philo(philo, nb_philo, rules->time_to_die);
-			if (nb_philo_dead != -1)
-			{
-				print_status(philo + nb_philo_dead, IS_DEAD, rules);
-				return (SUCCESS);
-			}	
-			i++;
-		}
+		if (is_dead_philo(philo, nb_philo, rules->time_to_die) == true)
+			return (SUCCESS);
 		ms_sleep(1, NULL);
 	}
 	return (SUCCESS);

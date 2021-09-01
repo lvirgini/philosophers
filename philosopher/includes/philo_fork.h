@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 23:23:00 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/07/25 11:13:55 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/01 10:47:00 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,8 @@
 
 # include "philosophers.h"
 
-enum	e_fork
-{
-	IS_FREE,
-	IS_TAKEN,
-};
-
 typedef struct s_fork
 {
-	int				status;
 	pthread_mutex_t	m_fork;
 }	t_fork;
 
