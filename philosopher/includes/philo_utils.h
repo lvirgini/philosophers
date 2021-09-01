@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 22:28:19 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/24 12:31:49 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/01 16:38:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define LONG_MAX 2147483647
 
-typedef long	t_ms;
+typedef long long	t_ms;
 
 enum e_bool
 {

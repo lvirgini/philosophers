@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:58:49 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/31 16:37:56 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/01 16:57:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,56 +58,60 @@ int	make_it_start(int nb_philo, t_philo *philo)
 }
 
 /*
-** checks if all the philosophers have eaten the necessary number of meals.
-*/
-
-static int	check_max_eat(t_philo *philo, int nb_philo, int max_eat)
-{
-	int		i;
-
-	if (max_eat == -1)
-		return (FAILLURE);
-	i = 0;
-	while (i < nb_philo)
-	{
-		pthread_mutex_lock(&philo[i].m_status);
-		if (philo[i].status != FINISHED_EATING)
-		{
-			pthread_mutex_unlock(&philo[i].m_status);
-			return (FAILLURE);
-		}
-		pthread_mutex_unlock(&philo[i].m_status);
-		i++;
-	}
-	return (SUCCESS);
-}
-
-/*
+** 	checks if all the philosophers have eaten the necessary number of meals.
 **	check if no philosopher is dead.
-**	if last_eat > time_to_die : he is dead.
+**		if last_eat > time_to_die : he is dead.
 */
 
-static int	is_dead_philo(t_philo *philo, int nb_philo, t_ms time_to_die)
+static int	is_dead_or_finished_eating(t_philo *philo, int nb_philo,
+	int max_eat, t_ms time_to_die)
 {
+	int				nb_finished_eating;
+	int				i;
 	struct timeval	now;
 	t_ms			last_eat;
 
-	while (nb_philo)
+	i = -1;
+	nb_finished_eating = 0;
+	while (++i < nb_philo)
 	{
-		nb_philo--;
-		pthread_mutex_lock(&philo[nb_philo].m_status);
+		pthread_mutex_lock(&philo[i].m_status);
+		if (max_eat != -1 && philo[i].status == FINISHED_EATING)
+			nb_finished_eating++;
 		gettimeofday(&now, NULL);
-		last_eat = get_diff_time_ms(philo[nb_philo].last_eat, now);
+		last_eat = get_diff_time_ms(philo[i].last_eat, now);
 		if (last_eat > 0 && last_eat > time_to_die)
 		{
-			print_status(&philo[nb_philo], IS_DEAD, philo->rules);
-			pthread_mutex_unlock(&philo[nb_philo].m_status);
+			print_status(&philo[i], IS_DEAD, philo->rules);
+			pthread_mutex_unlock(&philo[i].m_status);
 			return (true);
 		}	
-		pthread_mutex_unlock(&philo[nb_philo].m_status);
+		pthread_mutex_unlock(&philo[i].m_status);
 	}
+	if (nb_finished_eating == nb_philo)
+		return (true);
 	return (false);
 }
+
+/*
+** make all philo status to "FINISHED EATING" for stop all thread
+**	and join them after.
+*/
+
+void	make_it_stop(t_philo *philo, int nb_philo)
+{
+	while (nb_philo--)
+	{
+		pthread_mutex_lock(&philo[nb_philo].m_status);
+		philo[nb_philo].status = FINISHED_EATING;
+		pthread_mutex_unlock(&philo[nb_philo].m_status);
+	}
+}
+
+/*
+** init begin time, init philo thread, check all 1ms if one is dead
+** or if all finished eating
+*/
 
 int	start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
 	int nb_philo)
@@ -115,12 +119,9 @@ int	start_simulation(t_dinner_table *table, t_rules *rules, t_philo *philo,
 	init_the_begin_time(rules, philo, nb_philo);
 	if (make_it_start(nb_philo, philo) == FAILLURE)
 		return (philo_error(ERR_THREAD_INIT, table));
-	ms_sleep(1, NULL);
-	while (check_max_eat(philo, nb_philo, rules->nb_meal) == FAILLURE)
-	{
-		if (is_dead_philo(philo, nb_philo, rules->time_to_die) == true)
-			return (SUCCESS);
+	while (is_dead_or_finished_eating(philo, nb_philo, rules->nb_meal,
+			rules->time_to_die) == false)
 		ms_sleep(1, NULL);
-	}
+	make_it_stop(philo, nb_philo);
 	return (SUCCESS);
 }

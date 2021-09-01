@@ -6,11 +6,46 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 19:10:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/08/31 17:46:22 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/01 13:57:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	change_status(t_philo *philo, int status)
+{
+	pthread_mutex_lock(&philo->m_status);
+	if (philo->status != IS_DEAD && philo->status != FINISHED_EATING)
+		philo->status = status;
+	if (status == IS_EATING)
+	{
+		philo->nb_eat += 1;
+		if (philo->nb_eat == philo->rules->nb_meal)
+			philo->status = FINISHED_EATING;
+		gettimeofday(&philo->last_eat, NULL);
+	}
+	pthread_mutex_unlock(&philo->m_status);
+}
+
+/*
+** if rules->able_to_print == false
+** => one philo is already dead
+** stop all philo's routine
+*/
+
+int	can_write(t_rules *rules)
+{
+	if (!rules)
+		return (true);
+	pthread_mutex_lock(&rules->m_print);
+	if (rules->able_to_write == false)
+	{
+		pthread_mutex_unlock(&rules->m_print);
+		return (false);
+	}
+	pthread_mutex_unlock(&rules->m_print);
+	return (true);
+}
 
 /*
 ** write exactly the characters necessary to display the status of the
@@ -53,6 +88,6 @@ void	print_status(t_philo *philo, int status, t_rules *rules)
 	if (philo != NULL && rules->able_to_write == true)
 		write_status(get_diff_time_ms(rules->begin, now), philo->id, status);
 	if (status == IS_DEAD)
-		philo->rules->able_to_write = false;
+		rules->able_to_write = false;
 	pthread_mutex_unlock(&rules->m_print);
 }
