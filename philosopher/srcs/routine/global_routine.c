@@ -31,7 +31,6 @@ static void	thinking_routine(t_philo *philo)
 {
 	change_status(philo, IS_THINKING);
 	print_status(philo, IS_THINKING, philo->rules);
-	usleep(10);
 }
 
 /*
