@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/08/16 11:38:35 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/06 10:03:37 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,37 @@
 NAME =		philo
 
 OBJ_DIR =	obj/
-INC_DIR = 	$(shell find includes -type d)
-SRC_DIR = 	$(shell find srcs -type d)
+INC_DIR = 	includes/
+SRC_DIR = 	srcs srcs/errors srcs/init_struct srcs/parser srcs/routine srcs/time srcs/utils
 
-vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
-vpath %.h $(foreach dir, $(INC_DIR)/, $(dir):)
+OBJ		= $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
-SRC		= 	$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.c), $(notdir $(file))))
-OBJ 	=	$(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
+LIB		=	pthread
 
-LIB		= pthread
+SRCS	=	main.c \
+			error.c\
+			thread_init.c \
+			init_fork.c \
+			init_philo.c \
+			init_rules.c \
+			init_table.c \
+			parse_args.c\
+			checker_routine.c \
+			eating_routine.c \
+			global_routine.c \
+			print_status.c\
+			get_time.c \
+			ms_sleep.c \
+			second_convertor.c\
+			ft_isspace_isdigit.c \
+			ft_itoa_ltoa.c \
+			ft_memset.c \
+			ft_putstr.c \
+			ft_strncpy.c \
+			mini_atoi.c
+
+vpath %.c $(foreach dir, $(SRC_DIR)/, $(dir):)
+vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
 
 # ----------------- #
 #	 COMPILATION	#
@@ -35,41 +56,29 @@ LIB		= pthread
 
 CC = 			gcc
 CFLAG =			-Wall -Werror -Wextra
-CFLAG_LEAK = 	$(CFLAG) -fsanitize=leak
-CFLAG_ADDRESS = $(CFLAG) -fsanitize=address
-CFLAG_THREAD = 	$(CFLAG) -fsanitize=thread 
 IFLAG = 		$(foreach dir, $(INC_DIR), -I $(dir))
 LFLAG =			$(foreach lib, $(LIB), -l $(lib) )
- 
 
 # ----------------- #
 #	  FONCTIONS		#
 # ----------------- #
 
-$(OBJ_DIR)%.o: %.c $(HEADERS)
-			@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR):
+			@mkdir -p $@
+
+
+$(OBJ_DIR)%.o: %.c $(HEADERS) | $(OBJ_DIR)
 			@echo "\033[32mCompilation de ... $(foreach file, $< , $(notdir $<))\033[0m"
 			@$(CC) $(CFLAG) $(IFLAG) -o $@ -c $<
 			
-$(NAME):	$(OBJ) $(INC_DIR)
-			$(CC) $(CFLAG) $(IFLAG) $(OBJ) -o $@ $(LFLAG)
+$(NAME)	:	$(OBJ) $(INC_DIR)
+			@$(CC) $(CFLAG) $(IFLAG) $(OBJ) -o $@ $(LFLAG)
 			@echo "\n\t\033[36;1m*.............................*"
-			@echo "\n\t*     Compilation $(NAME)     *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
-			@echo "\n\t\033[036;1m*.............................*\033[0m"
+			@echo "\n\t*     Compilation $(NAME)       *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
+			@echo "\n\t\033[036;1m*.............................*\033[0m\n"
 	
-all:		${NAME}
-
-debug :		$(OBJ) $(INC_DIR)
-			@$(CC) $(CFLAG) $(IFLAG) $(OBJ)
-
-leak : 		$(OBJ) $(INC_DIR)
-			$(CC) $(CFLAG_LEAK) $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
-
-thread :	$(OBJ) $(INC_DIR)
-			$(CC) $(CFLAG_THREAD) $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
-
-adress :	$(OBJ) $(INC_DIR)
-			$(CC) $(CFLAG_ADDRESS) $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
+all		:	${NAME}
 
 show	:
 			@echo "SRC_DIR : $(SRC_DIR)\n"
@@ -79,8 +88,8 @@ show	:
 			@echo "IFLAG : $(IFLAG)\n"
 			@echo "LFLAG : $(LFLAG)\n"
 			@echo "HEADERS : $(foreach file, $(HEADERS),\n\t$(file))\n"
-			@echo "SRC :$(foreach file, $(SRC),\n\t$(file))\n"
-			@echo "OBJ :$(foreach file, $(OBJ),\n\t$(file))\n"
+			@echo "SRC : $(foreach file, $(SRCS),\n\t$(file))\n"
+			@echo "OBJ : $(foreach file, $(OBJ),\n\t$(file))\n"
 
 
 # ----------------- #
